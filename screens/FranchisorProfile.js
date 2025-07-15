@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const FranchiseProfile = () => {
+const FranchisorProfile = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Franchise</Text>
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   editText: { color: '#fff', fontWeight: 'bold' },
 });
 
-export default FranchiseProfile;
+export default FranchisorProfile;

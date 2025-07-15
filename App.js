@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import FranchiseProfile from './screens/FranchiseProfile';
+import FranchiseProfile from './screens/FranchisorProfile';
 export default function App() {
-  return <FranchiseProfile />;
+  return <FranchisorProfile />;
 }
 
 const styles = StyleSheet.create({

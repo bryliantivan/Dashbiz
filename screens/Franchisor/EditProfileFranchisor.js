@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
-
+import { useNavigation } from '@react-navigation/native';
 const EditProfileFranchisor = () => {
   const [logo, setLogo] = useState(null);
   const [franchiseName, setFranchiseName] = useState('');
@@ -73,10 +73,10 @@ const EditProfileFranchisor = () => {
 
       {/* Buttons */}
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.cancelButton}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('FranchisorProfile')}>
           <Text style={styles.cancelText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton}>
+        <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('FranchisorProfile')}>
           <Text style={styles.saveText}>Save Changes</Text>
         </TouchableOpacity>
       </View>

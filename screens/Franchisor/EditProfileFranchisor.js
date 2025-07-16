@@ -11,7 +11,8 @@ const EditProfileFranchisor = () => {
   const [description, setDescription] = useState('');
   const [galleryImage, setGalleryImage] = useState(null);
   const [contact, setContact] = useState('');
-
+  const navigation = useNavigation();
+  
   const pickLogo = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,

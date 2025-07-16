@@ -14,20 +14,8 @@ import ProductsCatalog from './screens/Franchisor/ProductsCatalog';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function App() {
-  return (
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="ProductsCatalog">
-    //     <Stack.Screen name="ProductsCatalog" component={ProductsCatalog} />
-    //     <Stack.Screen name="FranchiseeList" component={FranchiseeList} />
-    //     <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
-    //     <Stack.Screen name="AddNewType" component={AddNewType} />
-    //     <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
-    //     <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-    <NavigationContainer>
-      <Tab.Navigator
+const TabNavigator = () => (
+        <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarStyle: {
@@ -45,7 +33,6 @@ export default function App() {
 
             return <Ionicons name={iconName} size={24} color="#fff" />;
           },
-          tabBarShowLabel: false,
         })}
       >
         <Tab.Screen name="Dashboard" component={FranchisorDashboard} />
@@ -53,7 +40,19 @@ export default function App() {
         <Tab.Screen name="Products" component={ProductsCatalog} />
         <Tab.Screen name="Profile" component={FranchisorProfile} />
       </Tab.Navigator>
-    </NavigationContainer>
+);
+export default function App() {
+  return (
+    <NavigationContainer>
+       <Stack.Navigator screenOptions={{ headerShown: false }}>
+         <Stack.Screen name="Main" component={TabNavigator} />
+         
+         <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
+         <Stack.Screen name="AddNewType" component={AddNewType} />
+         <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
+         <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
+       </Stack.Navigator>
+     </NavigationContainer>
   );
 }
 

@@ -10,6 +10,7 @@ import FranchisorDashboard from './screens/Franchisor/FranchisorDashboard';
 import AddNewType from './screens/Franchisor/AddNewType';
 import FranchiseeList from './screens/Franchisor/FranchiseeList';
 import ProductsCatalog from './screens/Franchisor/ProductsCatalog';
+import AdminDashboard from './screens/Admin/AdminDashboard';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,13 +45,21 @@ const TabNavigator = () => (
 export default function App() {
   return (
     <NavigationContainer>
-       <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {/*  pls dont delete the comments */}
+       {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Admin"> */}
+       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
          <Stack.Screen name="Main" component={TabNavigator} />
          
          <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
          <Stack.Screen name="AddNewType" component={AddNewType} />
          <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
          <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
+
+        {/* admin */}
+        {/* tolong jangan hapus comment dibawah, ini mau dipakai kalo mau nunjukkin admin karena di navbar gaada caranya */}
+        {/* <Stack.Screen name="Admin" component={AdminDashboard} /> */}
+
+
        </Stack.Navigator>
      </NavigationContainer>
   );

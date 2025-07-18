@@ -22,33 +22,29 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = () => {
     if (selectedRole === 'Owner') {
-      navigation.navigate('OwnerDashboard');
+      navigation.navigate('OwnerMainTabs');
     } else if (selectedRole === 'Cashier') {
       console.warn('Login sebagai Cashier - Navigasi belum diimplementasikan.');
-      navigation.navigate('Main');
+      // navigation.navigate('CashierMainTabs');
     } else if (selectedRole === 'Franchisor') {
-      console.warn('Login sebagai Franchisor - Navigasi belum diimplementasikan.');
-      navigation.navigate('Main');
+      navigation.navigate('FranchisorMainTabs');
     } else if (selectedRole === 'Admin') {
       console.warn('Login sebagai Admin - Navigasi belum diimplementasikan.');
-      navigation.navigate('Main');
+      // navigation.navigate('AdminMainTabs');
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Logo */}
         <Image
           source={require('../../assets/ChatimeLogo.png')}
           style={styles.logo}
           resizeMode="contain"
         />
 
-        {/* Teks Login */}
         <Text style={styles.loginText}>LOGIN</Text>
 
-        {/* Tombol Pemilihan Peran */}
         <View style={styles.roleButtonsContainer}>
           <TouchableOpacity
             style={[styles.roleButton, selectedRole === 'Owner' && styles.roleButtonFocused]}
@@ -79,7 +75,6 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Input Email */}
         <View style={styles.inputContainer}>
           <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
           <TextInput
@@ -92,7 +87,6 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
 
-        {/* Input Password */}
         <View style={styles.inputContainer}>
           <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
           <TextInput
@@ -107,17 +101,14 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* Lupa Password - Diubah ke kiri dan navigasi */}
         <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('ForgotPassword')}>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        {/* Tombol Login */}
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
-        {/* Belum Terdaftar */}
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.notRegisteredText}>I'm not registered yet</Text>
         </TouchableOpacity>
@@ -207,7 +198,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   forgotPasswordButton: {
-    alignSelf: 'flex-start', 
+    alignSelf: 'flex-start',
     width: '80%',
     marginBottom: 20,
     marginLeft: '10%',

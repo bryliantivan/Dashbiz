@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 20, // Sesuaikan posisi vertikal
-    left: 20, // Sesuaikan posisi horizontal
-    zIndex: 1, // Pastikan tombol di atas elemen lain
-    padding: 10, // Area sentuh yang lebih besar
+    top: 20, 
+    left: 20,
+    zIndex: 1, 
+    padding: 10, 
   },
   logo: {
     width: width * 0.3, // Responsive logo size

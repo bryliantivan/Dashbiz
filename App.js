@@ -16,7 +16,8 @@ import RegisterScreen from './screens/Auth/RegisterScreen';
 import OwnerDashboard from './screens/Owner/OwnerDashboard';
 import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
 import VerifyCodeScreen from './screens/Auth/VerifyCodeScreen';
-import ResetPasswordScreen from './screens/Auth/ResetPasswordScreen'; // Import baru
+import ResetPasswordScreen from './screens/Auth/ResetPasswordScreen';
+import FranchiseDetail from './screens/Owner/FranchiseDetail'; // Import baru
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +60,7 @@ export default function App() {
                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
                <Stack.Screen name="VerifyCode" component={VerifyCodeScreen} />
                <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+               <Stack.Screen name="FranchiseDetail" component={FranchiseDetail} /> 
                <Stack.Screen name="Main" component={TabNavigator} />
                
                <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />

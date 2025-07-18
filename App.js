@@ -11,6 +11,12 @@ import AddNewType from './screens/Franchisor/AddNewType';
 import FranchiseeList from './screens/Franchisor/FranchiseeList';
 import ProductsCatalog from './screens/Franchisor/ProductsCatalog';
 import AdminDashboard from './screens/Admin/AdminDashboard';
+import LoginScreen from './screens/Auth/LoginScreen';
+import RegisterScreen from './screens/Auth/RegisterScreen';
+import OwnerDashboard from './screens/Owner/OwnerDashboard';
+import ForgotPasswordScreen from './screens/Auth/ForgotPasswordScreen';
+import VerifyCodeScreen from './screens/Auth/VerifyCodeScreen';
+import ResetPasswordScreen from './screens/Auth/ResetPasswordScreen'; // Import baru
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,7 +27,7 @@ const TabNavigator = () => (
           headerShown: false,
           tabBarStyle: {
             backgroundColor: '#355843',
-            height: 60,
+            height: 120,
             paddingTop: 8,
           },
           tabBarIcon: ({ focused, color }) => {
@@ -42,26 +48,26 @@ const TabNavigator = () => (
         <Tab.Screen name="Profile" component={FranchisorProfile} />
       </Tab.Navigator>
 );
+
 export default function App() {
   return (
     <NavigationContainer>
-      {/*  pls dont delete the comments */}
-       {/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Admin"> */}
-       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-         <Stack.Screen name="Main" component={TabNavigator} />
-         
-         <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
-         <Stack.Screen name="AddNewType" component={AddNewType} />
-         <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
-         <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
-
-        {/* admin */}
-        {/* tolong jangan hapus comment dibawah, ini mau dipakai kalo mau nunjukkin admin karena di navbar gaada caranya */}
-        {/* <Stack.Screen name="Admin" component={AdminDashboard} /> */}
-
-
-       </Stack.Navigator>
-     </NavigationContainer>
+           <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+               <Stack.Screen name="Login" component={LoginScreen} />
+               <Stack.Screen name="Register" component={RegisterScreen} />
+               <Stack.Screen name="OwnerDashboard" component={OwnerDashboard} />
+               <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+               <Stack.Screen name="VerifyCode" component={VerifyCodeScreen} />
+               <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+               <Stack.Screen name="Main" component={TabNavigator} />
+               
+               <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
+               <Stack.Screen name="AddNewType" component={AddNewType} />
+               <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
+               <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
+               {/* <Stack.Screen name="Admin" component={AdminDashboard} /> */}
+           </Stack.Navigator>
+         </NavigationContainer>
   );
 }
 

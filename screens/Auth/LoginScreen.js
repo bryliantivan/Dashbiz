@@ -30,7 +30,7 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate('FranchisorMainTabs');
     } else if (selectedRole === 'Admin') {
       console.warn('Login sebagai Admin - Navigasi belum diimplementasikan.');
-      // navigation.navigate('AdminMainTabs');
+      navigation.navigate('Admin');
     }
   };
 

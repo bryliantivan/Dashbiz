@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // For logout icon
 
 const AdminDashboard = () => {
     const [search, setSearch] = useState('');
@@ -60,9 +61,18 @@ const AdminDashboard = () => {
             </View>
         ));
 
+    const handleLogout = () => {
+        navigation.navigate('Login');
+    };
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Dashboard</Text>
+            <View style={styles.header}>
+                <Text style={styles.title}>Dashboard</Text>
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                    <Icon name="sign-out" size={24} color="#355E3B" />
+                </TouchableOpacity>
+            </View>
 
             {/* Search Bar */}
             <View style={styles.searchContainer}>
@@ -111,6 +121,15 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '85%',
+        marginLeft: 23,
+        marginTop: 20,
+        marginBottom: 16,
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -118,6 +137,9 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         marginTop: 50,
         marginLeft: 25,
+    },
+    logoutButton: {
+        padding: 5,
     },
     searchContainer: {
         width: '85%',

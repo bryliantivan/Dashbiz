@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome'; // For logout icon
 
 const FranchisorProfile = () => {
   const scrollViewRef = useRef(null);
@@ -26,6 +27,10 @@ const FranchisorProfile = () => {
       setCurrentIndex(currentIndex - 1);
       scrollViewRef.current.scrollTo({ x: currentIndex * screenWidth, animated: true });
     }
+  };
+
+  const handleLogout = () => {
+    navigation.navigate('Login');
   };
 
   return (
@@ -89,6 +94,10 @@ const FranchisorProfile = () => {
           <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditProfileFranchisor')}>
             <Text style={styles.editText}>Edit Franchise Profile</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <Icon name="sign-out" size={20} color="green" />
+            <Text style={styles.logoutText}>Log Out</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -117,6 +126,8 @@ const styles = StyleSheet.create({
   editButton: { backgroundColor: '#2E7D32', padding: 10, borderRadius: 5, alignItems: 'center', marginTop: 20, height: 40, width: 200, alignItems: 'center' },
   middle: { width: '100%', alignItems: 'center' },
   editText: { color: '#fff', fontWeight: 'bold', fontSize: 14 },
+  logoutButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10, marginTop: 10 },
+  logoutText: { color: 'green', marginLeft: 5 },
 });
 
 export default FranchisorProfile;

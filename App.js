@@ -91,7 +91,7 @@ const OwnerTabNavigator = () => (
       headerShown: false,
       tabBarStyle: {
         backgroundColor: '#355843',
-        height: 120,
+        height: 80,
         paddingTop: 8,
       },
       tabBarIcon: ({ focused, color }) => {

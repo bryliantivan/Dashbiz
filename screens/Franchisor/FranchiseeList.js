@@ -7,19 +7,58 @@ import {
   ScrollView,
   Modal,
   TextInput,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const FranchiseeList = () => {
-  const [removeModalVisible, setRemoveModalVisible] = useState(false);
-  const [addModalVisible, setAddModalVisible] = useState(false);
+const initialFranchises = [
+  { id: '1', name: 'Chatime', joined: '25 May 2000', category: 'Drink', location: 'Mayor Street' },
+  { id: '2', name: 'Tomoro Coffee', joined: '15 May 2000', category: 'Drink', location: 'Jenderal Street' },
+  { id: '3', name: "Domino's Pizza", joined: '25 June 2000', category: 'F&B', location: 'Bryliant Street' },
+  { id: '4', name: 'Subway', joined: '25 May 2010', category: 'F&B', location: 'Angjaya Street' },
+  { id: '5', name: 'Fore', joined: '5 March 2010', category: 'Drink', location: 'APT Street' },
+  { id: '6', name: 'Pagi Sore', joined: '12 May 2013', category: 'F&B', location: 'Pat Street' },
+  { id: '7', name: 'Mixue', joined: '29 July 2020', category: 'Drink', location: 'Trick Street' },
+  { id: '8', name: 'Kopi Kenangan', joined: '10 March 2017', category: 'Drink', location: 'Ghabena Street' },
+];
 
-  const franchisees = Array(5).fill({
-    name: 'Franchisee Name',
-    joined: 'XXX',
-    category: 'Category',
-    location: 'Location',
+const FranchiseeList = () => {
+  const [franchisees, setFranchisees] = useState(initialFranchises);
+  const [removeModalVisible, setRemoveModalVisible] = useState(false);
+  const [selectedIdToRemove, setSelectedIdToRemove] = useState(null);
+
+  const [addModalVisible, setAddModalVisible] = useState(false);
+  const [newFranchisee, setNewFranchisee] = useState({
+    name: '',
+    joined: '',
+    category: '',
+    location: '',
   });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    Object.entries(newFranchisee).forEach(([key, value]) => {
+      if (!value.trim()) newErrors[key] = `${key} is required`;
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleAddFranchisee = () => {
+    if (!validateForm()) return;
+    const newId = Date.now().toString();
+    setFranchisees([...franchisees, { id: newId, ...newFranchisee }]);
+    setNewFranchisee({ name: '', joined: '', category: '', location: '' });
+    setErrors({});
+    setAddModalVisible(false);
+  };
+
+  const handleConfirmRemove = () => {
+    setFranchisees(prev => prev.filter(f => f.id !== selectedIdToRemove));
+    setSelectedIdToRemove(null);
+    setRemoveModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -30,13 +69,16 @@ const FranchiseeList = () => {
         </Text>
 
         {franchisees.map((f, index) => (
-          <View key={index} style={styles.card}>
+          <View key={f.id} style={styles.card}>
             <Text style={styles.franchiseeName}>{f.name}</Text>
             <Text>🗓 Joined : {f.joined}</Text>
-            <Text>{f.category}</Text>
-            <Text>{f.location}</Text>
+            <Text>Category: {f.category}</Text>
+            <Text>Location: {f.location}</Text>
             <TouchableOpacity
-              onPress={() => setRemoveModalVisible(true)}
+              onPress={() => {
+                setSelectedIdToRemove(f.id);
+                setRemoveModalVisible(true);
+              }}
               style={styles.removeTextContainer}
             >
               <Text style={styles.removeText}>Remove access</Text>
@@ -74,7 +116,7 @@ const FranchiseeList = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.removeBtn}
-                onPress={() => setRemoveModalVisible(false)}
+                onPress={handleConfirmRemove}
               >
                 <Text style={styles.removeConfirmText}>Remove</Text>
               </TouchableOpacity>
@@ -93,20 +135,36 @@ const FranchiseeList = () => {
         <View style={styles.modalBackdrop}>
           <View style={styles.addBox}>
             <Text style={styles.addHeader}>Add New Franchisee</Text>
-            <TextInput style={styles.input} placeholder="Franchisee Name" />
-            <TextInput style={styles.input} placeholder="Franchise Type" />
-            <TextInput style={styles.input} placeholder="Franchise Location" />
+
+            {['name', 'joined', 'category', 'location'].map((field) => (
+              <View key={field}>
+                <TextInput
+                  style={styles.input}
+                  placeholder={`Franchisee ${field.charAt(0).toUpperCase() + field.slice(1)}`}
+                  value={newFranchisee[field]}
+                  onChangeText={(text) =>
+                    setNewFranchisee({ ...newFranchisee, [field]: text })
+                  }
+                />
+                {errors[field] && (
+                  <Text style={{ color: 'red', marginBottom: 8 }}>{errors[field]}</Text>
+                )}
+              </View>
+            ))}
 
             <View style={styles.modalButtonRow}>
               <TouchableOpacity
                 style={styles.cancelBtn}
-                onPress={() => setAddModalVisible(false)}
+                onPress={() => {
+                  setAddModalVisible(false);
+                  setErrors({});
+                }}
               >
                 <Text style={styles.cancelText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.removeBtn}
-                onPress={() => setAddModalVisible(false)}
+                onPress={handleAddFranchisee}
               >
                 <Text style={styles.removeConfirmText}>Add</Text>
               </TouchableOpacity>
@@ -183,7 +241,7 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderRadius: 6,
     padding: 10,
-    marginBottom: 14,
+    marginBottom: 8,
     backgroundColor: '#fff',
   },
   modalButtonRow: {

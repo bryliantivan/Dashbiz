@@ -65,7 +65,7 @@ const FranchiseeList = () => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Text style={styles.title}>List of Franchisee</Text>
         <Text style={styles.subtitle}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          See all of the franchise list below
         </Text>
 
         {franchisees.map((f, index) => (

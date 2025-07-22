@@ -22,6 +22,7 @@ import ProductsCatalog from './screens/Franchisor/ProductsCatalog';
 
 // Import screens Admin (existing)
 import AdminDashboard from './screens/Admin/AdminDashboard';
+import RequestedFrDetail from './screens/Admin/RequestedFrDetail';
 
 // Import screens Owner (existing and new placeholders)
 import OwnerDashboard from './screens/Owner/OwnerDashboard';
@@ -108,7 +109,7 @@ const OwnerTabNavigator = () => (
 export default function App() {
   return (
     <NavigationContainer>
-           <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+           <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Admin">
                <Stack.Screen name="Login" component={LoginScreen} />
                <Stack.Screen name="Register" component={RegisterScreen} />
                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
@@ -128,7 +129,8 @@ export default function App() {
                <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
                <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
 
-               {/* <Stack.Screen name="Admin" component={AdminDashboard} /> */}
+               <Stack.Screen name="Admin" component={AdminDashboard} />
+               <Stack.Screen name="RequestedFrDetail" component={RequestedFrDetail} />
            </Stack.Navigator>
          </NavigationContainer>
   );

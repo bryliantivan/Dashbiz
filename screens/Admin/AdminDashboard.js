@@ -1,37 +1,70 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 
 const AdminDashboard = () => {
     const [search, setSearch] = useState('');
-    const [activeTab, setActiveTab] = useState('request'); // 'request' or 'accepted'
+    const [activeTab, setActiveTab] = useState('request');
+    const navigation = useNavigation();
 
-    // Dummy data for demonstration
     const requests = [
-        { id: 1, title: 'Request 1', desc: 'Details for request 1' },
-        { id: 2, title: 'Request 2', desc: 'Details for request 2' },
+        { id: 1, title: 'CFC', requestedBy: 'kilesa', image: require('../../assets/CFCLogo.png'), description: 'CFC adalah ayam terenak termantap teruwawaw' },
+        { id: 2, title: 'Fore', requestedBy: 'vorti', image: require('../../assets/ForeLogo.png'), description: 'Fore adalah franchise kopi yang milo dinonya enak' },
+        { id: 3, title: 'JCO', requestedBy: 'lema', image: require('../../assets/JCONoTextLogo.png'), description: 'JCO adalah franchise yang jual donat almond enak'},
+        { id: 4, title: 'Krispy Kreme', requestedBy: 'aicirtap', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},
+        { id: 5, title: 'Pizza Hut', requestedBy: 'snoozie', image: require('../../assets/PizzaHutLogo.png'), description: 'Pizza Hut adalah franchise pizza yang lebih enak dari Domino' },
+        { id: 6, title: 'Red Dog', requestedBy: 'waaw', image: require('../../assets/RedDogNoHangulLogo.png'), description: 'Red Dog adalah franchise yang jualan sosis mozza seharga ci mehong' },
     ];
+    
     const accepted = [
-        { id: 3, title: 'Accepted 1', desc: 'Details for accepted 1' },
-        { id: 4, title: 'Accepted 2', desc: 'Details for accepted 2' },
+        { id: 7, title: 'Krispy Kreme', requestedBy: 'incenzee', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},
+        { id: 8, title: 'Pizza Hut', requestedBy: 'yawara', image: require('../../assets/PizzaHutLogo.png'), description: 'Pizza Hut adalah franchise pizza yang lebih enak dari Domino' },
+        { id: 9, title: 'CFC', requestedBy: 'r2d2', image: require('../../assets/CFCLogo.png'), description: 'CFC adalah ayam terenak termantap teruwawaw' },
+        { id: 10, title: 'Red Dog', requestedBy: 'chinerisme', image: require('../../assets/RedDogNoHangulLogo.png'), description: 'Red Dog adalah franchise yang jualan sosis mozza seharga ci mehong' },
+        { id: 11, title: 'Fore', requestedBy: 'xerocool', image: require('../../assets/ForeLogo.png'), description: 'Fore adalah franchise kopi yang milo dinonya enak' },
+        { id: 12, title: 'JCO', requestedBy: 'waleswhoosh', image: require('../../assets/JCONoTextLogo.png'), description: 'JCO adalah franchise yang jual donat almond enak'},
     ];
 
-    const renderCards = (data) => (
-        data.map(item => (
-            <View key={item.id} style={styles.card}>
-                <Text style={styles.cardTitle}>{item.title}</Text>
-                <Text style={styles.cardDesc}>{item.desc}</Text>
+    const renderCards = (data) =>
+        data.map((item, idx) => (
+            <View
+                key={item.id}
+                style={[
+                    styles.card,
+                    idx === data.length - 1 && { marginBottom: 32 }
+                ]}
+            >
+                <View style={styles.cardRow}>
+                    {item.image ? (
+                        <Image source={ item.image } style={styles.imagePlaceholder} />
+                    ) : (
+                        <View style={styles.imagePlaceholder} />
+                    )}
+                    <View style={styles.cardTextContainer}>
+                        <Text style={styles.cardTitle}>{item.title}</Text>
+                        <Text style={styles.cardSub}>Requested by : {item.requestedBy}</Text>
+                    </View>
+                </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        if (activeTab === 'accepted') {
+                            navigation.navigate('FranchisorDetail', { item });
+                        } else {
+                            navigation.navigate('RequestedFrDetail', { item, description: item.description });
+                        }
+                    }}
+                >
+                    <Text style={styles.cardDetails}>See details ›</Text>
+                </TouchableOpacity>
             </View>
-        ))
-    );
+        ));
 
     return (
-        <ScrollView contentContainerstyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
             <Text style={styles.title}>Dashboard</Text>
 
-            {/* search bar */}
+            {/* Search Bar */}
             <View style={styles.searchContainer}>
                 <Ionicons name="search" size={20} color="#000" style={styles.searchIcon} />
                 <TextInput
@@ -43,20 +76,33 @@ const AdminDashboard = () => {
                 />
             </View>
 
-            {/* request & accepted */}
+            {/* Tabs */}
             <View style={styles.requestAndAccepted}>
-                <Text style={styles.requestAndAcceptedLabel}>Request</Text>
-                <Text style={styles.requestAndAcceptedLabel}>Accepted</Text>
+                <TouchableOpacity style={styles.tabWrapper} onPress={() => setActiveTab('request')}>
+                    <Text style={[styles.requestAndAcceptedLabel, activeTab === 'request' && styles.activeTabLabel]}>
+                        Request
+                    </Text>
+                    {activeTab === 'request' && <View style={styles.activeTabLine} />}
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabWrapper} onPress={() => setActiveTab('accepted')}>
+                    <Text style={[styles.requestAndAcceptedLabel, activeTab === 'accepted' && styles.activeTabLabel]}>
+                        Accepted
+                    </Text>
+                    {activeTab === 'accepted' && <View style={styles.activeTabLine} />}
+                </TouchableOpacity>
             </View>
-            <View style={styles.progressBar}>
-                <View style={styles.progress} />
-            </View>
+            <View style={styles.tabUnderline} />
 
-
+            {/* Cards */}
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.cardContainer}
+            >
+                {renderCards(activeTab === 'request' ? requests : accepted)}
+            </ScrollView>
         </ScrollView>
     );
-
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -89,7 +135,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 40,
         borderRadius: 20,
-        paddingLeft: 40, // space for the icon
+        paddingLeft: 40,
         fontSize: 16,
         borderWidth: 1,
         borderColor: '#000',
@@ -99,27 +145,83 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: 10,
-        backgroundColor: '#f5f5f0',
+        marginTop: 5,
     },
     requestAndAcceptedLabel: {
         fontSize: 16,
     },
-    progressBar: {
-        height: 5,
-        width: '70%',
-        backgroundColor: '#ccc',
-        marginHorizontal: 10,
-        borderRadius: 10,
-        overflow: 'hidden',
-        alignContent: 'center',
-        alignSelf: 'center', 
+    tabWrapper: {
+        flex: 1,
+        alignItems: 'center',
+        paddingBottom: 4,
     },
-    progress: {
-        height: '100%',
-        width: '50%', // Adjust this value to change the progress length
+    activeTabLabel: {
+        color: '#355E3B',
+        fontWeight: 'bold',
+    },
+    activeTabLine: {
+        height: 3,
+        width: '55%',
         backgroundColor: '#355E3B',
-        borderRadius: 10,
+        borderRadius: 2,
+        marginTop: 2,
     },
-})
+    tabUnderline: {
+        width: '85%',
+        height: 1,
+        backgroundColor: '#bbb',
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
+    cardContainer: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '85%',
+        alignSelf: 'center',
+        paddingLeft: 37.5,
+        marginBottom: 20,
+    },
+    card: {
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 10,
+        padding: 16,
+        marginBottom: 16,
+        width: Dimensions.get('window').width * 0.8,
+        minHeight: 120,
+    },
+    cardRow: {
+        flexDirection: 'row',
+    },
+    imagePlaceholder: {
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#000',
+        backgroundColor: '#fff',
+        marginRight: 12,
+    },
+    cardTextContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    cardTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    cardSub: {
+        fontSize: 14,
+        color: '#444',
+        marginTop: 4,
+    },
+    cardDetails: {
+        textAlign: 'right',
+        color: '#888',
+        fontSize: 14,
+    },
+});
 
 export default AdminDashboard;

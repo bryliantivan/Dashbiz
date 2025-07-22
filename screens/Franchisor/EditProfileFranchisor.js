@@ -74,10 +74,10 @@ const EditProfileFranchisor = () => {
 
       {/* Buttons */}
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('FranchisorProfile')}>
+        <TouchableOpacity style={styles.cancelButton} onPress={() => navigation.navigate('FranchisorProfileMain')}>
           <Text style={styles.cancelText}>Cancel</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('FranchisorProfile')}>
+        <TouchableOpacity style={styles.saveButton} onPress={() => navigation.navigate('FranchisorProfileMain')}>
           <Text style={styles.saveText}>Save Changes</Text>
         </TouchableOpacity>
       </View>

@@ -37,13 +37,28 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Tab Navigator untuk peran Franchisor (sudah ada)
+const FranchisorDashboardStack = createStackNavigator();
+const FranchisorProfileStack = createStackNavigator();
+const FranchisorDashboardStackScreen = () => (
+  <FranchisorDashboardStack.Navigator screenOptions={{ headerShown: false }}>
+    <FranchisorDashboardStack.Screen name="FranchisorDashboardMain" component={FranchisorDashboard} />
+    <FranchisorDashboardStack.Screen name="AddNewType" component={AddNewType} />
+  </FranchisorDashboardStack.Navigator>
+);
+
+const FranchisorProfileStackScreen = () => (
+  <FranchisorProfileStack.Navigator screenOptions={{ headerShown: false }}>
+    <FranchisorProfileStack.Screen name="FranchisorProfileMain" component={FranchisorProfile} />
+    <FranchisorProfileStack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
+  </FranchisorProfileStack.Navigator>
+);
 const FranchisorTabNavigator = () => (
         <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
           tabBarStyle: {
             backgroundColor: '#355843',
-            height: 120,
+            height: 80,
             paddingTop: 8,
           },
           tabBarIcon: ({ focused, color }) => {
@@ -62,10 +77,10 @@ const FranchisorTabNavigator = () => (
           }
         })}
       >
-        <Tab.Screen name="Dashboard" component={FranchisorDashboard} />
-        <Tab.Screen name="Franchise" component={FranchiseeList} />
-        <Tab.Screen name="Products" component={ProductsCatalog} />
-        <Tab.Screen name="Profile" component={FranchisorProfile} />
+      <Tab.Screen name="Dashboard" component={FranchisorDashboardStackScreen} />
+      <Tab.Screen name="Franchise" component={FranchiseeList} />
+      <Tab.Screen name="Products" component={ProductsCatalog} />
+      <Tab.Screen name="Profile" component={FranchisorProfileStackScreen} />
       </Tab.Navigator>
 );
 
@@ -124,10 +139,6 @@ export default function App() {
 
                <Stack.Screen name="FranchisorMainTabs" component={FranchisorTabNavigator} />
 
-               <Stack.Screen name="FranchisorProfile" component={FranchisorProfile} />
-               <Stack.Screen name="AddNewType" component={AddNewType} />
-               <Stack.Screen name="EditProfileFranchisor" component={EditProfileFranchisor} />
-               <Stack.Screen name="FranchisorDashboard" component={FranchisorDashboard} />
 
                <Stack.Screen name="Admin" component={AdminDashboard} />
                <Stack.Screen name="RequestedFrDetail" component={RequestedFrDetail} />

@@ -6,9 +6,9 @@ const FranchisorProfile = () => {
   const scrollViewRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
-    require('../../assets/ChatimeLogo.png'), // Adjust path if necessary (e.g., ../../../assets/)
-    require('../../assets/ChatimeLogo.png'),
-    require('../../assets/ChatimeLogo.png'),
+    require('../../assets/Chatime1.jpg'), // Adjust path if necessary (e.g., ../../../assets/)
+    require('../../assets/Chatime2.jpg'),
+    require('../../assets/Chatime3.jpg'),
   ];
   
   const { width: screenWidth } = Dimensions.get('window');

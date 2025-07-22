@@ -75,7 +75,7 @@ const AddNewType = () => {
       </TouchableOpacity>
 
       {/* Add Button */}
-      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('FranchisorDashboard')}>
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('FranchisorDashboardMain')}>
         <Text style={styles.addButtonText}>Add</Text>
       </TouchableOpacity>
     </ScrollView>

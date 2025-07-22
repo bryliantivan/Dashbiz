@@ -8,49 +8,47 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  Pressable,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
+
+const imageMap = {
+  latte: require('../../assets/latte.jpg'),
+  cappuccino: require('../../assets/cappucino.jpg'),
+  icedlatte: require('../../assets/iced latte.jpg'),
+};
 
 const ProductsCatalog = () => {
   const [products, setProducts] = useState([
-    { id: 1, name: 'Americano', price: 'Rp10.000' },
-    { id: 2, name: 'Iced Latte', price: 'Rp14.500' },
-    { id: 3, name: 'Cappuccino', price: 'Rp14.500' },
+    { id: 1, name: 'Latte', price: 'Rp10.000', imageKey: 'latte' },
+    { id: 2, name: 'Iced Latte', price: 'Rp14.500', imageKey: 'icedlatte' },
+    { id: 3, name: 'Cappuccino', price: 'Rp14.500', imageKey: 'cappuccino' },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [newProductName, setNewProductName] = useState('');
   const [newProductPrice, setNewProductPrice] = useState('');
-  const [newProductImage, setNewProductImage] = useState(null);
+  const [newProductImageUri, setNewProductImageUri] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [errors, setErrors] = useState({});
 
   const filteredProducts = products.filter((p) =>
     p.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleDelete = (id) => {
-    setProducts(products.filter((product) => product.id !== id));
+  const handleDeleteProduct = (id) => {
+    setProducts(products.filter((p) => p.id !== id));
   };
 
-  const handleAddProduct = () => {
-    if (!newProductName || !newProductPrice) return;
+  const handleImagePick = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission to access media library is required!');
+      return;
+    }
 
-    const newProduct = {
-      id: Date.now(),
-      name: newProductName,
-      price: `Rp${parseFloat(newProductPrice).toLocaleString('id-ID')}`,
-      image: newProductImage,
-    };
-
-    setProducts([...products, newProduct]);
-    setNewProductName('');
-    setNewProductPrice('');
-    setNewProductImage(null);
-    setModalVisible(false);
-  };
-
-  const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -58,88 +56,135 @@ const ProductsCatalog = () => {
     });
 
     if (!result.canceled) {
-      setNewProductImage(result.assets[0].uri);
+      const pickedUri = result.assets[0].uri;
+      const fileName = pickedUri.split('/').pop();
+      const newPath = `${FileSystem.documentDirectory}${fileName}`;
+
+      await FileSystem.copyAsync({
+        from: pickedUri,
+        to: newPath,
+      });
+
+      setNewProductImageUri(newPath);
     }
+  };
+
+  const handleAddProduct = () => {
+    const validationErrors = {};
+    if (!newProductName.trim()) validationErrors.name = 'Name is required';
+    if (!newProductPrice.trim()) validationErrors.price = 'Price is required';
+    if (!newProductImageUri.trim()) {
+      validationErrors.image = 'Image is required';
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    const newProduct = {
+      id: Date.now(),
+      name: newProductName.trim(),
+      price: newProductPrice.trim(),
+      imageUri: newProductImageUri.trim(),
+    };
+
+    setProducts([...products, newProduct]);
+    setModalVisible(false);
+    setNewProductName('');
+    setNewProductPrice('');
+    setNewProductImageUri('');
+    setErrors({});
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.title}>Products Catalog</Text>
+      <Text style={styles.title}>Products Catalog</Text>
 
-        {/* Search bar */}
-        <View style={styles.searchContainer}>
-          <Ionicons name="search" size={16} color="#888" style={styles.searchIcon} />
-          <TextInput
-            placeholder="Search.."
-            style={styles.searchInput}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search.."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
 
-        {/* Product List */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {filteredProducts.map((product) => (
-          <View key={product.id} style={styles.card}>
-            <View style={styles.cardLeft}>
-              <View style={styles.productImagePlaceholder} />
-              <View>
-                <Text style={styles.productName}>{product.name}</Text>
-                <Text style={styles.productPrice}>{product.price}</Text>
-              </View>
+          <View key={product.id} style={styles.productCard}>
+            <Image
+              source={
+                product.imageUri
+                  ? { uri: product.imageUri }
+                  : imageMap[product.imageKey]
+              }
+              style={styles.productImage}
+            />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.productName}>{product.name}</Text>
+              <Text style={styles.productPrice}>{product.price}</Text>
             </View>
-            <TouchableOpacity onPress={() => handleDelete(product.id)}>
-              <Ionicons name="trash" size={20} color="black" />
+            <TouchableOpacity onPress={() => handleDeleteProduct(product.id)}>
+              <Ionicons name="trash-bin" size={20} color="#000" />
             </TouchableOpacity>
           </View>
         ))}
 
-        {/* Add new product button */}
-        <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-          <Text style={styles.addButtonText}>Add new product</Text>
-          <Ionicons name="add-circle" size={16} color="black" style={{ marginLeft: 5 }} />
+        <TouchableOpacity
+          style={styles.addProductButton}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.addProductText}>Add new product</Text>
+          <Ionicons name="add-circle" size={20} color="#000" />
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Add Product Modal */}
-      <Modal
-        transparent
-        visible={modalVisible}
-        animationType="fade"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalBox}>
-            <Text style={styles.modalTitle}>Add New Product</Text>
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Add New Product</Text>
 
+            <Text style={styles.label}>Name</Text>
             <TextInput
-              placeholder="Name"
               style={styles.input}
               value={newProductName}
               onChangeText={setNewProductName}
             />
+            {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+
+            <Text style={styles.label}>Price</Text>
             <TextInput
-              placeholder="Price"
               style={styles.input}
               value={newProductPrice}
               onChangeText={setNewProductPrice}
               keyboardType="numeric"
             />
+            {errors.price && <Text style={styles.errorText}>{errors.price}</Text>}
 
-            <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
-              <Ionicons name="add-circle" size={20} color="black" />
-              <Text style={{ marginLeft: 10 }}>Add Image</Text>
-            </TouchableOpacity>
+            <Text style={styles.label}>Image</Text>
+            <Pressable onPress={handleImagePick} style={styles.imagePickerBox}>
+              <Ionicons name="add-circle-outline" size={20} color="#333" />
+              <Text style={{ fontSize: 16 }}>
+                {newProductImageUri ? `Selected` : 'Add Image'}
+              </Text>
+            </Pressable>
+            {errors.image && (
+              <Text style={styles.errorText}>{errors.image}</Text>
+            )}
 
-            <View style={styles.modalButtonRow}>
+            <View style={styles.modalButtons}>
               <TouchableOpacity
-                style={styles.cancelBtn}
+                style={[styles.modalButton, styles.cancelButton]}
                 onPress={() => setModalVisible(false)}
+                activeOpacity={0.6}
               >
-                <Text style={styles.cancelText}>Cancel</Text>
+                <Text style={styles.modalButtonTextDark}>Cancel</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.addBtn} onPress={handleAddProduct}>
-                <Text style={styles.addText}>Add</Text>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.addButtonModal]}
+                onPress={handleAddProduct}
+                activeOpacity={0.6}
+              >
+                <Text style={styles.modalButtonTextDark}>Add</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -149,138 +194,146 @@ const ProductsCatalog = () => {
   );
 };
 
-export default ProductsCatalog;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFCF2',
-  },
-  scrollContent: {
+    backgroundColor: '#fef8ee',
     padding: 20,
-    paddingBottom: 100,
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  searchContainer: {
-    position: 'relative',
-    marginBottom: 20,
-  },
-  searchIcon: {
-    position: 'absolute',
-    left: 10,
-    top: 13,
+    marginBottom: 12,
   },
   searchInput: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#999',
     borderRadius: 20,
-    paddingLeft: 35,
     paddingVertical: 8,
-    backgroundColor: '#fff',
+    paddingHorizontal: 15,
+    marginBottom: 15,
   },
-  card: {
+  productCard: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#fffaf0',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#000',
-    padding: 12,
-    borderRadius: 6,
-    backgroundColor: '#fff',
-    marginBottom: 12,
+    borderColor: '#ccc',
   },
-  cardLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  productImagePlaceholder: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#bbb',
-    borderRadius: 4,
+  productImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: '#ddd',
     marginRight: 12,
   },
   productName: {
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
   },
   productPrice: {
-    fontSize: 13,
-  },
-  addButton: {
-    flexDirection: 'row',
-    alignSelf: 'flex-end',
-    backgroundColor: '#E0E0E0',
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  addButtonText: {
     fontSize: 14,
+    color: '#666',
   },
-
-  modalBackdrop: {
+  addProductButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e1e1e1',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    alignSelf: 'flex-end',
+    marginTop: 10,
+    gap: 6,
+  },
+  addProductText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  modalOverlay: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#00000090',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    paddingHorizontal: 20,
   },
-  modalBox: {
-    backgroundColor: '#FFFCF2',
+  modalView: {
+    margin: 20,
+    backgroundColor: '#fef8ee',
+    borderRadius: 16,
     padding: 20,
-    borderRadius: 12,
-    width: '85%',
+    width: 300,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333',
   },
-  modalTitle: {
-    fontSize: 18,
+  modalText: {
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 12,
     textAlign: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#333',
+    width: '100%',
+    paddingBottom: 8,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 6,
+    borderColor: '#aaa',
+    borderRadius: 8,
     padding: 10,
-    backgroundColor: '#fff',
-    marginBottom: 12,
+    marginBottom: 10,
+    width: 250,
+    backgroundColor: 'white',
   },
-  imagePicker: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  label: {
+    alignSelf: 'flex-start',
+    marginBottom: 4,
+    marginTop: 8,
+    fontWeight: '500',
+  },
+  imagePickerBox: {
     borderWidth: 1,
-    borderColor: '#000',
-    padding: 10,
-    borderRadius: 6,
-    backgroundColor: '#fff',
-    marginBottom: 20,
+    borderColor: '#333',
+    borderRadius: 8,
+    padding: 15,
+    marginBottom: 12,
+    width: 250,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 6,
+    backgroundColor: 'white',
   },
-  modalButtonRow: {
+  modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: 12,
+    marginTop: 10,
   },
-  cancelBtn: {
-    backgroundColor: '#E0E0E0',
+  modalButton: {
     paddingVertical: 10,
-    paddingHorizontal: 25,
+    paddingHorizontal: 20,
     borderRadius: 20,
   },
-  addBtn: {
-    backgroundColor: '#D3F276',
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    borderRadius: 20,
+  cancelButton: {
+    backgroundColor: '#dcdcdc',
   },
-  cancelText: {
+  addButtonModal: {
+    backgroundColor: '#d7f1b4',
+  },
+  modalButtonTextDark: {
+    color: '#333',
     fontWeight: 'bold',
   },
-  addText: {
-    fontWeight: 'bold',
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    alignSelf: 'flex-start',
   },
 });
+
+export default ProductsCatalog;

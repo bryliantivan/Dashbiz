@@ -13,14 +13,16 @@ import {
 
 const { width, height } = Dimensions.get('window');
 
-// Data dummy untuk daftar franchise
+// Data dummy untuk daftar franchise dengan logo yang diperbarui
 const franchises = [
-  { id: '1', name: 'FRANCHISE A', monthlySales: 'Rp12.345.678' },
-  { id: '2', name: 'FRANCHISE B', monthlySales: 'Rp9.876.543' },
-  { id: '3', name: 'FRANCHISE C', monthlySales: 'Rp5.678.901' },
-  { id: '4', name: 'FRANCHISE D', monthlySales: 'Rp2.345.678' },
-  { id: '5', name: 'FRANCHISE E', monthlySales: 'Rp7.890.123' },
-  { id: '6', name: 'FRANCHISE F', monthlySales: 'Rp4.567.890' },
+  { id: '1', name: 'Chatime', monthlySales: 'Rp12.345.678', logo: require('../../assets/ChatimeLogo.png') },
+  { id: '2', name: 'Tomoro Coffee', monthlySales: 'Rp9.876.543', logo: require('../../assets/CFCLogo.png') }, // Placeholder, as per your input
+  { id: '3', name: "Domino's Pizza", monthlySales: 'Rp5.678.901', logo: require('../../assets/ForeLogo.png') }, // Placeholder, as per your input
+  { id: '4', name: 'Subway', monthlySales: 'Rp2.345.678', logo: require('../../assets/JCOLogo.png') }, // Placeholder, as per your input
+  { id: '5', name: 'Fore', monthlySales: 'Rp7.890.123', logo: require('../../assets/KrispyKremeLogo.png') }, // Placeholder, as per your input
+  { id: '6', name: 'Pagi Sore', monthlySales: 'Rp4.567.890', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder, as per your input
+  { id: '7', name: 'Mixue', monthlySales: 'Rp3.123.456', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
+  { id: '8', name: 'Kopi Kenangan', monthlySales: 'Rp6.543.210', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
 ];
 
 const OwnerDashboard = ({ navigation }) => {
@@ -50,7 +52,7 @@ const OwnerDashboard = ({ navigation }) => {
             >
               <View style={styles.franchiseLogoContainer}>
                 <Image
-                  source={require('../../assets/KrispyKremeLogo.png')} // Menggunakan logo sementara
+                  source={franchise.logo} // Menggunakan logo dinamis dari data franchise
                   style={styles.franchiseLogo}
                   resizeMode="contain"
                 />

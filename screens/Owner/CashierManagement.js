@@ -10,13 +10,13 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
-  Alert, // Untuk simulasi pop-up konfirmasi
+  Alert, // For simulating confirmation pop-ups
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
-// Data dummy untuk daftar kasir
+// Dummy data for cashier list
 const initialCashiers = [
   { id: '1', name: 'Budi Santoso', email: 'budi.s@example.com', status: 'Active', lastLogin: '2024-07-17 10:30' },
   { id: '2', name: 'Siti Aminah', email: 'siti.a@example.com', status: 'Inactive', lastLogin: '2024-07-10 14:00' },
@@ -29,7 +29,7 @@ const CashierManagement = ({ navigation }) => {
   const [cashiers, setCashiers] = useState(initialCashiers);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter kasir berdasarkan query pencarian
+  // Filter cashiers based on search query
   const filteredCashiers = cashiers.filter(cashier =>
     cashier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     cashier.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,44 +37,44 @@ const CashierManagement = ({ navigation }) => {
   );
 
   const handleAddCashier = () => {
-    Alert.alert('Tambah Kasir', 'Fungsionalitas tambah kasir akan diimplementasikan di sini.');
-    // TODO: Navigasi ke halaman AddCashierScreen atau tampilkan modal
+    Alert.alert('Add Cashier', 'Add cashier functionality will be implemented here.');
+    // TODO: Navigate to AddCashierScreen or show a modal
   };
 
-  // Fungsi untuk memperbarui data kasir di daftar
+  // Function to update cashier data in the list
   const handleUpdateCashier = (updatedCashier) => {
     setCashiers(prevCashiers =>
       prevCashiers.map(cashier =>
         cashier.id === updatedCashier.id ? updatedCashier : cashier
       )
     );
-    Alert.alert('Berhasil', 'Perubahan kasir berhasil disimpan.');
+    Alert.alert('Success', 'Cashier changes saved successfully.');
   };
 
   const handleEditCashier = (cashierId) => {
     const cashierToEdit = cashiers.find(c => c.id === cashierId);
     if (cashierToEdit) {
-      // Meneruskan objek kasir dan fungsi callback handleUpdateCashier
+      // Pass the cashier object and the handleUpdateCashier callback function
       navigation.navigate('EditCashier', { cashier: cashierToEdit, onSave: handleUpdateCashier });
     } else {
-      Alert.alert('Error', 'Kasir tidak ditemukan.');
+      Alert.alert('Error', 'Cashier not found.');
     }
   };
 
   const handleDeleteCashier = (cashierId) => {
     Alert.alert(
-      'Hapus Kasir',
-      'Apakah Anda yakin ingin menghapus kasir ini?',
+      'Delete Cashier',
+      'Are you sure you want to delete this cashier?',
       [
         {
-          text: 'Batal',
+          text: 'Cancel',
           style: 'cancel',
         },
         {
-          text: 'Hapus',
+          text: 'Delete',
           onPress: () => {
             setCashiers(prevCashiers => prevCashiers.filter(c => c.id !== cashierId));
-            Alert.alert('Berhasil', 'Kasir berhasil dihapus.');
+            Alert.alert('Success', 'Cashier deleted successfully.');
           },
           style: 'destructive',
         },
@@ -86,11 +86,11 @@ const CashierManagement = ({ navigation }) => {
   const renderCashierItem = ({ item }) => (
     <View style={styles.cashierCard}>
       <View style={styles.cashierInfo}>
-        <Text style={styles.cashierId}>ID Kasir: {item.id}</Text>
+        <Text style={styles.cashierId}>Cashier ID: {item.id}</Text>
         <Text style={styles.cashierName}>{item.name}</Text>
         <Text style={styles.cashierEmail}>{item.email}</Text>
         <Text style={styles.cashierStatus}>Status: <Text style={{ fontWeight: 'bold', color: item.status === 'Active' ? '#355843' : '#FF6347' }}>{item.status}</Text></Text>
-        <Text style={styles.cashierLastLogin}>Terakhir Login: {item.lastLogin}</Text>
+        <Text style={styles.cashierLastLogin}>Last Login: {item.lastLogin}</Text>
       </View>
       <View style={styles.cashierActions}>
         <TouchableOpacity style={styles.actionButton} onPress={() => handleEditCashier(item.id)}>
@@ -99,7 +99,7 @@ const CashierManagement = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity style={[styles.actionButton, { marginLeft: 10 }]} onPress={() => handleDeleteCashier(item.id)}>
           <Ionicons name="trash-outline" size={20} color="#FF6347" />
-          <Text style={styles.actionButtonText}>Hapus</Text>
+          <Text style={styles.actionButtonText}>Delete</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -108,15 +108,15 @@ const CashierManagement = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={styles.headerTitle}>Manajemen Kasir</Text>
-        <Text style={styles.headerSubtitle}>Kelola akun dan status kasir Anda.</Text>
+        <Text style={styles.headerTitle}>Cashier Management</Text>
+        <Text style={styles.headerSubtitle}>Manage your cashier accounts and statuses.</Text>
 
         {/* Search Bar */}
         <View style={styles.searchBarContainer}>
           <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
-            placeholder="Cari Kasir..."
+            placeholder="Search Cashier..."
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
@@ -125,7 +125,7 @@ const CashierManagement = ({ navigation }) => {
         {/* Add Cashier Button */}
         <TouchableOpacity style={styles.addButton} onPress={handleAddCashier}>
           <Ionicons name="add-circle-outline" size={24} color="#fff" />
-          <Text style={styles.addButtonText}>Tambah Kasir Baru</Text>
+          <Text style={styles.addButtonText}>Add New Cashier</Text>
         </TouchableOpacity>
 
         {/* Cashier List */}
@@ -136,7 +136,7 @@ const CashierManagement = ({ navigation }) => {
           contentContainerStyle={styles.cashierListContent}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => (
-            <Text style={styles.emptyListText}>Tidak ada kasir ditemukan.</Text>
+            <Text style={styles.emptyListText}>No cashiers found.</Text>
           )}
         />
       </View>
@@ -147,7 +147,7 @@ const CashierManagement = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFCF0', // Warna latar belakang konsisten
+    backgroundColor: '#FFFCF0', // Consistent background color
   },
   container: {
     flex: 1,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     flexDirection: 'row',
-    backgroundColor: '#355843', // Warna tombol utama
+    backgroundColor: '#355843', // Primary button color
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cashierListContent: {
-    paddingBottom: 20, // Ruang di bawah daftar
-    width: width * 0.9, // Sesuaikan lebar agar sesuai dengan padding container
+    paddingBottom: 20, // Space below the list
+    width: width * 0.9, // Adjust width to match container padding
   },
   cashierCard: {
     backgroundColor: '#fff',
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
   cashierInfo: {
     marginBottom: 10,
   },
-  cashierId: { // Gaya baru untuk ID Kasir
+  cashierId: { // Style for Cashier ID
     fontSize: 12,
     color: '#999',
     marginBottom: 5,
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
   },
   cashierActions: {
     flexDirection: 'row',
-    justifyContent: 'flex-end', // Rata kanan tombol aksi
+    justifyContent: 'flex-end', // Align action buttons to the right
     borderTopWidth: 1,
     borderTopColor: '#EAEAEA',
     paddingTop: 10,
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    // backgroundColor: '#F0F0F0', // Opsional: latar belakang tombol aksi
+    // backgroundColor: '#F0F0F0', // Optional: action button background
   },
   actionButtonText: {
     fontSize: 14,

@@ -50,7 +50,7 @@ const OwnerDashboard = ({ navigation }) => {
             >
               <View style={styles.franchiseLogoContainer}>
                 <Image
-                  source={require('../../assets/ChatimeLogo.png')} // Menggunakan logo sementara
+                  source={require('../../assets/KrispyKremeLogo.png')} // Menggunakan logo sementara
                   style={styles.franchiseLogo}
                   resizeMode="contain"
                 />

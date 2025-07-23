@@ -34,11 +34,11 @@ const EditCashierScreen = ({ navigation, route }) => {
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
 
-        <Text style={styles.title}>Edit Kasir</Text>
-        <Text style={styles.subtitle}>ID Kasir: {cashier?.id || 'N/A'}</Text>
+        <Text style={styles.title}>Edit Cashier</Text>
+        <Text style={styles.subtitle}>Cashier ID: {cashier?.id || 'N/A'}</Text>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>Nama Kasir</Text>
+          <Text style={styles.inputLabel}>Cashier Name</Text>
           <TextInput
             style={styles.input}
             value={name}
@@ -48,7 +48,7 @@ const EditCashierScreen = ({ navigation, route }) => {
         </View>
 
         <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>Email Kasir</Text>
+          <Text style={styles.inputLabel}>Cashier Email</Text>
           <TextInput
             style={styles.input}
             value={email}
@@ -77,7 +77,7 @@ const EditCashierScreen = ({ navigation, route }) => {
         </View>
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveButtonText}>Simpan Perubahan</Text>
+          <Text style={styles.saveButtonText}>Save Changes</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
-    paddingTop: 60, // Sesuaikan agar tidak terlalu mepet atas
+    paddingTop: 60,
   },
   backButton: {
     position: 'absolute',

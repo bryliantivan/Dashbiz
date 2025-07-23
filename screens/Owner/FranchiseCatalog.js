@@ -18,13 +18,13 @@ const { width, height } = Dimensions.get('window');
 // Data dummy untuk daftar franchise
 const allFranchises = [
   { id: '1', name: 'Chatime', logo: require('../../assets/ChatimeLogo.png') },
-  { id: '2', name: 'Tomoro Coffee', logo: require('../../assets/ChatimeLogo.png') }, // Placeholder
-  { id: '3', name: "Domino's Pizza", logo: require('../../assets/ChatimeLogo.png') }, // Placeholder
-  { id: '4', name: 'Subway', logo: require('../../assets/ChatimeLogo.png') }, // Placeholder
-  { id: '5', name: 'Fore', logo: require('../../assets/ChatimeLogo.png') }, // Placeholder
-  { id: '6', name: 'Pagi Sore', logo: require('../../assets/ChatimeLogo.png') }, // Placeholder
-  { id: '7', name: 'Mixue', logo: require('../../assets/ChatimeLogo.png') }, // Contoh tambahan
-  { id: '8', name: 'Kopi Kenangan', logo: require('../../assets/ChatimeLogo.png') }, // Contoh tambahan
+  { id: '2', name: 'Tomoro Coffee', logo: require('../../assets/CFCLogo.png') }, // Placeholder
+  { id: '3', name: "Domino's Pizza", logo: require('../../assets/ForeLogo.png') }, // Placeholder
+  { id: '4', name: 'Subway', logo: require('../../assets/JCOLogo.png') }, // Placeholder
+  { id: '5', name: 'Fore', logo: require('../../assets/KrispyKremeLogo.png') }, // Placeholder
+  { id: '6', name: 'Pagi Sore', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder
+  { id: '7', name: 'Mixue', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan
+  { id: '8', name: 'Kopi Kenangan', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan
 ];
 
 const FranchiseCatalog = ({ navigation }) => {

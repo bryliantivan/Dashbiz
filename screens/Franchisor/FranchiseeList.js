@@ -12,14 +12,14 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 const initialFranchises = [
-  { id: '1', name: 'Chatime', joined: '25 May 2000', category: 'Drink', location: 'Mayor Street' },
-  { id: '2', name: 'Tomoro Coffee', joined: '15 May 2000', category: 'Drink', location: 'Jenderal Street' },
-  { id: '3', name: "Domino's Pizza", joined: '25 June 2000', category: 'F&B', location: 'Bryliant Street' },
-  { id: '4', name: 'Subway', joined: '25 May 2010', category: 'F&B', location: 'Angjaya Street' },
-  { id: '5', name: 'Fore', joined: '5 March 2010', category: 'Drink', location: 'APT Street' },
-  { id: '6', name: 'Pagi Sore', joined: '12 May 2013', category: 'F&B', location: 'Pat Street' },
-  { id: '7', name: 'Mixue', joined: '29 July 2020', category: 'Drink', location: 'Trick Street' },
-  { id: '8', name: 'Kopi Kenangan', joined: '10 March 2017', category: 'Drink', location: 'Ghabena Street' },
+  { id: '1', name: 'William', joined: '25 May 2000', category: 'Chatime A', location: 'Mayor Street' },
+  { id: '2', name: 'Angjaya', joined: '15 May 2000', category: 'Chatime B', location: 'Jenderal Street' },
+  { id: '3', name: "Nicholas", joined: '25 June 2000', category: 'Chatime C', location: 'Bryliant Street' },
+  { id: '4', name: 'Ivan', joined: '25 May 2010', category: 'Chatime D', location: 'Angjaya Street' },
+  { id: '5', name: 'Patricia', joined: '5 March 2010', category: 'Chatime E', location: 'APT Street' },
+  { id: '6', name: 'Mary', joined: '12 May 2013', category: 'Chatime F', location: 'Pat Street' },
+  { id: '7', name: 'Defin', joined: '29 July 2020', category: 'Chatime G', location: 'Trick Street' },
+  { id: '8', name: 'Amelia', joined: '10 March 2017', category: 'Chatime H', location: 'Ghabena Street' },
 ];
 
 const FranchiseeList = () => {

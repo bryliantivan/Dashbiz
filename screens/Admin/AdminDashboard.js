@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -9,23 +9,33 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('request');
     const navigation = useNavigation();
 
-    const requests = [
+    const [requests, setRequests] = useState([
         { id: 1, title: 'CFC', requestedBy: 'kilesa', image: require('../../assets/CFCLogo.png'), description: 'CFC adalah ayam terenak termantap teruwawaw' },
         { id: 2, title: 'Fore', requestedBy: 'vorti', image: require('../../assets/ForeLogo.png'), description: 'Fore adalah franchise kopi yang milo dinonya enak' },
         { id: 3, title: 'JCO', requestedBy: 'lema', image: require('../../assets/JCONoTextLogo.png'), description: 'JCO adalah franchise yang jual donat almond enak'},
         { id: 4, title: 'Krispy Kreme', requestedBy: 'aicirtap', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},
         { id: 5, title: 'Pizza Hut', requestedBy: 'snoozie', image: require('../../assets/PizzaHutLogo.png'), description: 'Pizza Hut adalah franchise pizza yang lebih enak dari Domino' },
         { id: 6, title: 'Red Dog', requestedBy: 'waaw', image: require('../../assets/RedDogNoHangulLogo.png'), description: 'Red Dog adalah franchise yang jualan sosis mozza seharga ci mehong' },
-    ];
-    
-    const accepted = [
+    ]);
+    const [accepted, setAccepted] = useState([
         { id: 7, title: 'Krispy Kreme', requestedBy: 'incenzee', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},
         { id: 8, title: 'Pizza Hut', requestedBy: 'yawara', image: require('../../assets/PizzaHutLogo.png'), description: 'Pizza Hut adalah franchise pizza yang lebih enak dari Domino' },
         { id: 9, title: 'CFC', requestedBy: 'r2d2', image: require('../../assets/CFCLogo.png'), description: 'CFC adalah ayam terenak termantap teruwawaw' },
         { id: 10, title: 'Red Dog', requestedBy: 'chinerisme', image: require('../../assets/RedDogNoHangulLogo.png'), description: 'Red Dog adalah franchise yang jualan sosis mozza seharga ci mehong' },
         { id: 11, title: 'Fore', requestedBy: 'xerocool', image: require('../../assets/ForeLogo.png'), description: 'Fore adalah franchise kopi yang milo dinonya enak' },
         { id: 12, title: 'JCO', requestedBy: 'waleswhoosh', image: require('../../assets/JCONoTextLogo.png'), description: 'JCO adalah franchise yang jual donat almond enak'},
-    ];
+    ]);
+
+    // Accept handler: move from requests to accepted
+    const handleAccept = useCallback((item) => {
+        setRequests(prev => prev.filter(req => req.id !== item.id));
+        setAccepted(prev => [{ ...item }, ...prev]);
+    }, []);
+
+    // Reject handler: remove from requests
+    const handleReject = useCallback((item) => {
+        setRequests(prev => prev.filter(req => req.id !== item.id));
+    }, []);
 
     const renderCards = (data) =>
         data.map((item, idx) => (
@@ -52,7 +62,12 @@ const AdminDashboard = () => {
                         if (activeTab === 'accepted') {
                             navigation.navigate('FranchisorDetail', { item });
                         } else {
-                            navigation.navigate('RequestedFrDetail', { item, description: item.description });
+                            navigation.navigate('RequestedFrDetail', {
+                                item,
+                                description: item.description,
+                                onAccept: handleAccept,
+                                onReject: handleReject,
+                            });
                         }
                     }}
                 >

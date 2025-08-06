@@ -7,7 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 const RequestedFrDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { item, description: initialDescription } = route.params || {};
+  const { item, description: initialDescription, onAccept, onReject } = route.params || {};
 
   const [franchiseName, setFranchiseName] = useState(item?.title || '');
   const [dateFounded, setDateFounded] = useState('June 9th 2025');
@@ -88,10 +88,22 @@ const RequestedFrDetail = () => {
 
         {/* Buttons */}
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.rejectButton}>
+          <TouchableOpacity
+            style={styles.rejectButton}
+            onPress={() => {
+              if (onReject) onReject(item);
+              navigation.goBack();
+            }}
+          >
             <Text style={styles.rejectText}>Reject</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.acceptButton}>
+          <TouchableOpacity
+            style={styles.acceptButton}
+            onPress={() => {
+              if (onAccept) onAccept(item);
+              navigation.goBack();
+            }}
+          >
             <Text style={styles.acceptText}>Accept</Text>
           </TouchableOpacity>
         </View>

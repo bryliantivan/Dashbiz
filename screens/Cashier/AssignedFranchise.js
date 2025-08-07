@@ -297,6 +297,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderColor: '#eee',
     borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   menuCardSelected: {
     borderColor: 'lightgreen',
@@ -307,7 +312,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 6,
     marginRight: 12,
-    backgroundColor: '#ccc',
   },
   menuName: {
     fontSize: 15,

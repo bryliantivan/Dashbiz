@@ -41,7 +41,7 @@ const FranchisorProfile = () => {
         <View style={styles.headerBox}>
           <Image source={require('../../assets/ChatimeLogo.png')} style={styles.logo} />
           <View style={styles.franchiseDetails}>
-            <Text style={styles.franchiseInfo}>FRANCHISE</Text>
+            <Text style={styles.franchiseInfo}>CHATIME</Text>
             <Text>★ 4.6 | 2005</Text>
             <Text>▪ Date Franchising Commenced: 2023</Text>
             <Text>▪ Number of Outlets: 460</Text>
@@ -95,7 +95,7 @@ const FranchisorProfile = () => {
             <Text style={styles.editText}>Edit Franchise Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-            <Icon name="sign-out" size={20} color="green" />
+            <Icon name="sign-out" size={20} color="#355843" />
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
         </View>
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
   indicator: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#ccc', marginHorizontal: 5 },
   activeIndicator: { backgroundColor: '#2E7D32' }, // Green for active
   investorText: { fontSize: 14, marginVertical: 10, color: '#333', textAlign: 'justify' },
-  editButton: { backgroundColor: '#2E7D32', padding: 10, borderRadius: 5, alignItems: 'center', marginTop: 20, height: 40, width: 200, alignItems: 'center' },
+  editButton: { backgroundColor: '#355843', padding: 10, borderRadius: 5, alignItems: 'center', marginTop: 20, height: 40, width: 200, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.1, shadowRadius: 4, elevation: 3, },
   middle: { width: '100%', alignItems: 'center' },
   editText: { color: '#fff', fontWeight: 'bold', fontSize: 14 },
   logoutButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10, marginTop: 10 },
-  logoutText: { color: 'green', marginLeft: 5 },
+  logoutText: { color: '#355843', marginLeft: 5 },
 });
 
 export default FranchisorProfile;

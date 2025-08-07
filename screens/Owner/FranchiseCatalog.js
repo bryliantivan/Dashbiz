@@ -39,7 +39,7 @@ const FranchiseCatalog = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {/* Header */}
-        <Text style={styles.headerTitle}>FRANCHISE CATALOG</Text>
+        <Text style={styles.headerTitle}>Franchise Catalog</Text>
         <Text style={styles.headerSubtitle}>
           Browse our full catalog and find a brand that fits your business goals.
         </Text>

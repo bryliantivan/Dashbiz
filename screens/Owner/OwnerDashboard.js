@@ -147,8 +147,6 @@ const styles = StyleSheet.create({
   franchiseLogoContainer: {
     width: 80,
     height: 80,
-    borderWidth: 1,
-    borderColor: '#D3D3D3',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',

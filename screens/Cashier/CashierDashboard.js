@@ -131,7 +131,7 @@ export default function CashierDashboard() {
               }}
               style={styles.saveButton}
             >
-              <Text>Save Changes</Text>
+              <Text style={{ color: '#fff' }}>Save Changes</Text>
             </TouchableOpacity>
 
           </View>
@@ -197,10 +197,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   editButton: {
-    backgroundColor: '#a8e060',
+    backgroundColor: '#355843',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
   },
   workplaceTitle: {
     fontSize: 20,
@@ -275,9 +280,14 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     alignSelf: 'center',
-    backgroundColor: '#e1e1e1',
+    backgroundColor: '#355843',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });

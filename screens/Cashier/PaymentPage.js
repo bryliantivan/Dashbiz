@@ -111,7 +111,7 @@ const PaymentPage = ({ navigation, route }) => {
       {/* Pay Button */}
       <TouchableOpacity style={styles.payBtn} onPress={handlePay}>
         <Ionicons name="arrow-forward" color="#fff" size={18} />
-        <Text style={styles.payText}>Pay →</Text>
+        <Text style={styles.payText}>Pay</Text>
       </TouchableOpacity>
 
       {/* Modal */}
@@ -159,7 +159,7 @@ const PaymentPage = ({ navigation, route }) => {
 export default PaymentPage;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  container: { flex: 1, padding: 16, backgroundColor: '#FFFCF0' },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     marginBottom: 10,
+
   },
   label: { fontSize: 12, color: '#888' },
   value: { fontWeight: 'bold' },
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   paymentDetail: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'white',
     padding: 16,
     borderRadius: 12,
     marginTop: 10,
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   doneBtn: {
-    backgroundColor: '#98c9a3',
+    backgroundColor: '#355843',
     paddingHorizontal: 24,
     paddingVertical: 8,
     borderRadius: 6,

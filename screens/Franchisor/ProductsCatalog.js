@@ -134,7 +134,7 @@ const ProductsCatalog = () => {
           onPress={() => setModalVisible(true)}
         >
           <Text style={styles.addProductText}>Add new product</Text>
-          <Ionicons name="add-circle" size={20} color="#000" />
+          <Ionicons name="add-circle" size={20} color="white" />
         </TouchableOpacity>
       </ScrollView>
 
@@ -184,7 +184,7 @@ const ProductsCatalog = () => {
                 onPress={handleAddProduct}
                 activeOpacity={0.6}
               >
-                <Text style={styles.modalButtonTextDark}>Add</Text>
+                <Text style={styles.modalButtonTextDark2}>Add</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -247,17 +247,22 @@ const styles = StyleSheet.create({
   addProductButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e1e1e1',
+    backgroundColor: '#355843',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
     alignSelf: 'flex-end',
     marginTop: 10,
     gap: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   addProductText: {
     fontSize: 14,
-    color: '#000',
+    color: 'white',
   },
   modalOverlay: {
     flex: 1,
@@ -327,12 +332,26 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#dcdcdc',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   addButtonModal: {
-    backgroundColor: '#d7f1b4',
+    backgroundColor: '#355843',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   modalButtonTextDark: {
     color: '#333',
+    fontWeight: 'bold',
+  },
+  modalButtonTextDark2: {
+    color: 'white',
     fontWeight: 'bold',
   },
   errorText: {

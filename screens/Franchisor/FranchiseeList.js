@@ -91,7 +91,7 @@ const FranchiseeList = () => {
           onPress={() => setAddModalVisible(true)}
         >
           <Text style={styles.addButtonText}>Add new franchisee</Text>
-          <Ionicons name="add-circle" size={16} style={{ marginLeft: 5 }} />
+          <Ionicons name="add-circle" size={16} style={{ marginLeft: 5, color: 'white' }} />
         </TouchableOpacity>
       </ScrollView>
 
@@ -201,14 +201,19 @@ const styles = StyleSheet.create({
   removeText: { color: 'red', fontWeight: '500' },
 
   addButton: {
-    backgroundColor: '#E0E0E0',
+    backgroundColor: '#355843',
     padding: 12,
     borderRadius: 20,
     alignSelf: 'flex-end',
     flexDirection: 'row',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-  addButtonText: { fontSize: 14 },
+  addButtonText: { fontSize: 14, color: 'white' },
 
   modalBackdrop: {
     flex: 1,
@@ -260,12 +265,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   removeBtn: {
-    backgroundColor: '#D3F276',
+    backgroundColor: '#355843',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   cancelText: {
     fontWeight: 'bold',
@@ -273,6 +288,6 @@ const styles = StyleSheet.create({
   },
   removeConfirmText: {
     fontWeight: 'bold',
-    color: '#000',
+    color: 'white',
   },
 });

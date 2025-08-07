@@ -190,8 +190,6 @@ const styles = StyleSheet.create({
     width: width * 0.25,
     height: width * 0.25,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#D3D3D3',
     marginRight: 15,
   },
   franchiseTextInfo: {

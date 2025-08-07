@@ -77,7 +77,7 @@ export default function CashierDashboard() {
           <TouchableOpacity style={styles.franchiseCard} onPress={() => handleFranchisePress(item)}>
             <Image source={item.image} style={styles.franchiseImage} />
             <View>
-              <Text style={styles.franchiseName}>FRANCHISE</Text>
+              <Text style={styles.franchiseName}>{item.name}</Text>
               <Text style={styles.franchiseText}>Work since: {item.since}</Text>
             </View>
           </TouchableOpacity>
@@ -172,13 +172,16 @@ const styles = StyleSheet.create({
   },
   profileCard: {
     backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   profileImage: {
     width: 60,
@@ -209,10 +212,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 10,
     marginBottom: 12,
-    borderRadius: 8,
+    borderRadius: 10,
     borderColor: '#ddd',
-    borderWidth: 1,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 2,
   },
   franchiseImage: {
     width: 60,

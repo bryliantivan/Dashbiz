@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fef8ee' },
   content: { padding: 20, paddingTop: 40 },
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'left', color: '#000' },
-  headerBox: { flexDirection: 'row', alignItems: 'center', marginVertical: 10, backgroundColor: '#fff', padding: 10, borderRadius: 5 },
+  headerBox: { flexDirection: 'row', alignItems: 'center', marginVertical: 10,  padding: 10, borderRadius: 5 },
   logo: { width: 50, height: 50, marginRight: 10 },
   franchiseDetails: { flex: 1 },
   franchiseInfo: { fontSize: 32, fontWeight: 'bold', color: '#2E7D32' },

@@ -185,11 +185,16 @@ const styles = StyleSheet.create({
   subtitle: { color: '#444', marginBottom: 20 },
   card: {
     borderWidth: 1,
-    borderColor: '#000',
+    borderColor: '#D3D3D3',
+    shadowColor: '#000', // Efek bayangan
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
     padding: 16,
     marginBottom: 16,
     borderRadius: 6,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
   franchiseeName: { fontWeight: 'bold', fontSize: 16, marginBottom: 4 },
   removeTextContainer: { marginTop: 10 },

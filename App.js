@@ -16,7 +16,6 @@ import ResetPasswordScreen from './screens/Auth/ResetPasswordScreen';
 import FranchisorProfile from './screens/Franchisor/FranchisorProfile';
 import EditProfileFranchisor from './screens/Franchisor/EditProfileFranchisor';
 import FranchisorDashboard from './screens/Franchisor/FranchisorDashboard';
-import AddNewType from './screens/Franchisor/AddNewType';
 import FranchiseeList from './screens/Franchisor/FranchiseeList';
 import ProductsCatalog from './screens/Franchisor/ProductsCatalog';
 
@@ -48,7 +47,6 @@ const FranchisorProfileStack = createStackNavigator();
 const FranchisorDashboardStackScreen = () => (
   <FranchisorDashboardStack.Navigator screenOptions={{ headerShown: false }}>
     <FranchisorDashboardStack.Screen name="FranchisorDashboardMain" component={FranchisorDashboard} />
-    <FranchisorDashboardStack.Screen name="AddNewType" component={AddNewType} />
   </FranchisorDashboardStack.Navigator>
 );
 

@@ -102,7 +102,16 @@ export default function AssignedFranchise() {
 
 
   return (
+    
     <View style={styles.container}>
+      <View style={styles.topBar}>
+      <TouchableOpacity onPress={() => navigation.navigate('CashierDashboard')}>
+        <Ionicons name="arrow-back" size={24} color="black" />
+      </TouchableOpacity>
+      <Text style={styles.topBarTitle}>Franchise</Text>
+      <View style={{ width: 24 }} />
+    </View>
+
       {/* Profile Section */}
       <View style={styles.profile}>
         <Image
@@ -202,6 +211,19 @@ export default function AssignedFranchise() {
 }
 
 const styles = StyleSheet.create({
+  topBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  topBarTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
+    marginRight: 24, // aligns the title in the center by compensating arrow width
+  },
   container: {
     flex: 1,
     backgroundColor: '#fefbea',

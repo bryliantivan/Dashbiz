@@ -201,9 +201,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 12,
+    paddingTop: 20
   },
   searchInput: {
     borderWidth: 1,

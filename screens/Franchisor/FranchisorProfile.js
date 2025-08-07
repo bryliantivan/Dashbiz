@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+  import React, { useState, useRef } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // For logout icon
@@ -105,7 +105,7 @@ const FranchisorProfile = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5DC' },
+  container: { flex: 1, backgroundColor: '#fef8ee' },
   content: { padding: 20, paddingTop: 40 },
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'left', color: '#000' },
   headerBox: { flexDirection: 'row', alignItems: 'center', marginVertical: 10, backgroundColor: '#fff', padding: 10, borderRadius: 5 },

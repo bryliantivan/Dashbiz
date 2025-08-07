@@ -1,10 +1,35 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Modal,
+  TextInput,
+} from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 
 const FranchisorDashboard = () => {
-    const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [franchiseTypes, setFranchiseTypes] = useState([]);
+  const [form, setForm] = useState({
+    name: '',
+    founded: '',
+    commenced: '',
+    description: '',
+    contact: '',
+  });
+
+  const handleAddType = () => {
+    if (form.name && form.founded && form.commenced && form.description && form.contact) {
+      setFranchiseTypes([...franchiseTypes, form]);
+      setForm({ name: '', founded: '', commenced: '', description: '', contact: '' });
+      setModalVisible(false);
+    }
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
       <Text style={styles.title}>Dashboard</Text>
@@ -38,20 +63,83 @@ const FranchisorDashboard = () => {
         </View>
       </View>
 
-      {/* Franchise Type Box */}
+      {/* Franchise Types */}
       <View style={styles.card}>
-        <View style={styles.franchiseTypeRow}>
-          <Image source={require('../../assets/ChatimeLogo.png')} style={styles.typeImage} />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={styles.franchiseLabel}>FRANCHISE TYPE</Text>
-            <Text>Total outlets : XX</Text>
+        {franchiseTypes.map((type, index) => (
+          <View key={index} style={styles.franchiseTypeRow}>
+            <Image source={require('../../assets/ChatimeLogo.png')} style={styles.typeImage} />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={styles.franchiseLabel}>{type.name}</Text>
+              <Text>Date Business Founded: {type.founded}</Text>
+              <Text>Date Franchising Commenced: {type.commenced}</Text>
+              <Text>Description: {type.description}</Text>
+              <Text>Contact: {type.contact}</Text>
+            </View>
           </View>
-        </View>
+        ))}
       </View>
-        <TouchableOpacity style={styles.addTypeButton} onPress={() => navigation.navigate('AddNewType')}>
-          <Text style={styles.addTypeText}>Add franchise type</Text>
-          <Ionicons name="add-circle" size={16} color="#000" style={{ marginLeft: 5 }} />
-        </TouchableOpacity>
+
+      <TouchableOpacity style={styles.addTypeButton} onPress={() => setModalVisible(true)}>
+        <Text style={styles.addTypeText}>Add franchise type</Text>
+        <Ionicons name="add-circle" size={16} color="#000" style={{ marginLeft: 5 }} />
+      </TouchableOpacity>
+
+      {/* Modal Popup */}
+      <Modal visible={modalVisible} animationType="slide">
+        <ScrollView contentContainerStyle={styles.modalContainer}>
+          <Text style={styles.modalTitle}>EDIT FRANCHISE PROFILE</Text>
+          <View style={styles.imageBox}>
+            <View style={styles.imagePlaceholder} />
+            <TouchableOpacity style={styles.penIcon}>
+              <Ionicons name="pencil" size={16} color="white" />
+            </TouchableOpacity>
+          </View>
+          <TextInput
+            placeholder="Franchise Name"
+            style={styles.input}
+            value={form.name}
+            onChangeText={(text) => setForm({ ...form, name: text })}
+          />
+          <TextInput
+            placeholder="Date Business Founded"
+            style={styles.input}
+            value={form.founded}
+            onChangeText={(text) => setForm({ ...form, founded: text })}
+          />
+          <TextInput
+            placeholder="Date Franchising Commenced"
+            style={styles.input}
+            value={form.commenced}
+            onChangeText={(text) => setForm({ ...form, commenced: text })}
+          />
+          <TextInput
+            placeholder="Description"
+            style={[styles.input, { height: 100 }]}
+            multiline
+            value={form.description}
+            onChangeText={(text) => setForm({ ...form, description: text })}
+          />
+          <Text style={{ marginTop: 10 }}>Image</Text>
+          <TouchableOpacity style={styles.imageUploadBox}>
+            <Ionicons name="add-circle" size={18} />
+            <Text style={{ marginLeft: 6 }}>Add Image</Text>
+          </TouchableOpacity>
+          <TextInput
+            placeholder="Contact"
+            style={styles.input}
+            value={form.contact}
+            onChangeText={(text) => setForm({ ...form, contact: text })}
+          />
+          <View style={styles.buttonRow}>
+            <TouchableOpacity style={styles.cancelBtn} onPress={() => setModalVisible(false)}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.saveBtn} onPress={handleAddType}>
+              <Text style={{ color: 'white' }}>Save Changes</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </Modal>
     </ScrollView>
   );
 };
@@ -63,9 +151,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
+    paddingTop: 20,
   },
   franchiseBox: {
     flexDirection: 'row',
@@ -144,6 +233,69 @@ const styles = StyleSheet.create({
   },
   addTypeText: {
     fontSize: 14,
+  },
+  modalContainer: {
+    backgroundColor: '#FFFCF2',
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  imageBox: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  imagePlaceholder: {
+    width: 100,
+    height: 100,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 8,
+  },
+  penIcon: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'green',
+    borderRadius: 12,
+    padding: 4,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+  },
+  imageUploadBox: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 6,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: '#fff',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  cancelBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    backgroundColor: '#E0E0E0',
+  },
+  saveBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    backgroundColor: '#B5E48C',
   },
 });
 

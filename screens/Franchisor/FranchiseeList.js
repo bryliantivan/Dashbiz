@@ -181,7 +181,7 @@ export default FranchiseeList;
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FFFCF2' },
   scrollContainer: { padding: 20, paddingBottom: 100 },
-  title: { fontSize: 22, fontWeight: 'bold' },
+  title: { fontSize: 28, fontWeight: 'bold', paddingTop: 20 },
   subtitle: { color: '#444', marginBottom: 20 },
   card: {
     borderWidth: 1,

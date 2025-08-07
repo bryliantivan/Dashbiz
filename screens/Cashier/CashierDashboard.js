@@ -26,6 +26,8 @@ export default function CashierDashboard() {
   const [phone, setPhone] = useState('08xx xxxx xxxx');
 
   const navigation = useNavigation();
+  const [editingName, setEditingName] = useState(false);
+  const [tempName, setTempName] = useState(name); 
 
   const handleFranchisePress = (franchise) => {
     navigation.navigate('AssignedFranchise', { franchise });
@@ -37,16 +39,16 @@ export default function CashierDashboard() {
       <View style={styles.header}>
         <Text style={styles.headerTextCentered}>
             <TouchableOpacity onPress={() => setDropdownVisible(!dropdownVisible)} style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={styles.headerText}>CASHIER</Text>
+            <Text style={styles.headerText}>Cashier</Text>
             <Ionicons name="chevron-down" size={16} />
             </TouchableOpacity>
         </Text>
         {dropdownVisible && (
             <TouchableOpacity
             style={styles.logoutDropdown}
-            onPress={() => alert('Logged out')}
+            onPress={() => navigation.navigate('Login')}
             >
-            <Ionicons name="log-out-outline" size={16} color="white" style={{ marginRight: 6 }} />
+            <Ionicons name="log-out-outline" size={16} color="green" style={{ marginRight: 6 }} />
             <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
         )}
@@ -88,9 +90,25 @@ export default function CashierDashboard() {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>EDIT PROFILE</Text>
             <Image source={require('../../assets/Chatime1.jpg')} style={styles.modalProfileImage} />
-            <Text style={styles.editNameLabel}>
-              {name} <Ionicons name="pencil" />
-            </Text>
+            <View style={{ alignItems: 'center', marginBottom: 20 }}>
+              {editingName ? (
+                <TextInput
+                  value={tempName}
+                  onChangeText={setTempName}
+                  onBlur={() => setEditingName(false)}
+                  autoFocus
+                  style={[styles.input, { width: '100%', textAlign: 'center' }]}
+                />
+              ) : (
+                <TouchableOpacity onPress={() => setEditingName(true)}>
+                  <Text style={styles.editNameLabel}>
+                    {tempName} <Ionicons name="pencil" />
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+
+
 
             <TextInput
               placeholder="Email"
@@ -106,11 +124,16 @@ export default function CashierDashboard() {
             />
 
             <TouchableOpacity
-              onPress={() => setModalVisible(false)}
+              onPress={() => {
+                setName(tempName);           // Save changes
+                setEditingName(false);       // Reset edit mode
+                setModalVisible(false);      // Close modal
+              }}
               style={styles.saveButton}
             >
               <Text>Save Changes</Text>
             </TouchableOpacity>
+
           </View>
         </View>
       </Modal>
@@ -136,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoutDropdown: {
-    backgroundColor: '#f88',
+    backgroundColor: 'white',
     padding: 8,
     borderRadius: 5,
     marginTop: 8,
@@ -144,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoutText: {
-    color: 'white',
+    color: 'green',
     fontWeight: 'bold',
   },
   profileCard: {

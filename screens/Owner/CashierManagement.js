@@ -1,4 +1,3 @@
-// screens/Owner/CashierManagement.js
 import React, { useState } from 'react';
 import {
   View,
@@ -6,17 +5,16 @@ import {
   StyleSheet,
   SafeAreaView,
   Dimensions,
-  ScrollView,
   TouchableOpacity,
   TextInput,
   FlatList,
-  Alert, // For simulating confirmation pop-ups
+  Alert,
+  Modal,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
-// Dummy data for cashier list
 const initialCashiers = [
   { id: '1', name: 'Budi Santoso', email: 'budi.s@example.com', status: 'Active', lastLogin: '2024-07-17 10:30' },
   { id: '2', name: 'Siti Aminah', email: 'siti.a@example.com', status: 'Inactive', lastLogin: '2024-07-10 14:00' },
@@ -28,8 +26,10 @@ const initialCashiers = [
 const CashierManagement = ({ navigation }) => {
   const [cashiers, setCashiers] = useState(initialCashiers);
   const [searchQuery, setSearchQuery] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newCashierName, setNewCashierName] = useState('');
+  const [newCashierEmail, setNewCashierEmail] = useState('');
 
-  // Filter cashiers based on search query
   const filteredCashiers = cashiers.filter(cashier =>
     cashier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     cashier.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -37,25 +37,39 @@ const CashierManagement = ({ navigation }) => {
   );
 
   const handleAddCashier = () => {
-    Alert.alert('Add Cashier', 'Add cashier functionality will be implemented here.');
-    // TODO: Navigate to AddCashierScreen or show a modal
+    setModalVisible(true);
   };
+  
+  const handleSaveNewCashier = () => {
+    if (!newCashierName.trim() || !newCashierEmail.trim()) {
+      Alert.alert('Error', 'Name and email are required.');
+      return;
+    }
 
-  // Function to update cashier data in the list
-  const handleUpdateCashier = (updatedCashier) => {
-    setCashiers(prevCashiers =>
-      prevCashiers.map(cashier =>
-        cashier.id === updatedCashier.id ? updatedCashier : cashier
-      )
-    );
-    Alert.alert('Success', 'Cashier changes saved successfully.');
+    const newId = (parseInt(cashiers[cashiers.length - 1].id) + 1).toString();
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+    const newCashier = {
+      id: newId,
+      name: newCashierName,
+      email: newCashierEmail,
+      status: 'Active',
+      lastLogin: 'Never',
+    };
+
+    setCashiers(prevCashiers => [...prevCashiers, newCashier]);
+    setModalVisible(false);
+    setNewCashierName('');
+    setNewCashierEmail('');
+    Alert.alert('Success', 'New cashier added successfully.');
   };
 
   const handleEditCashier = (cashierId) => {
     const cashierToEdit = cashiers.find(c => c.id === cashierId);
     if (cashierToEdit) {
-      // Pass the cashier object and the handleUpdateCashier callback function
-      navigation.navigate('EditCashier', { cashier: cashierToEdit, onSave: handleUpdateCashier });
+      // Implementasi edit dalam modal atau layar lain jika diperlukan
+      Alert.alert('Edit Cashier', 'Edit functionality will be implemented here.');
     } else {
       Alert.alert('Error', 'Cashier not found.');
     }
@@ -140,6 +154,49 @@ const CashierManagement = ({ navigation }) => {
           )}
         />
       </View>
+      
+      {/* Modal untuk menambahkan kasir baru */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalTitle}>Add New Cashier</Text>
+            <Text style={styles.label}>Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter cashier's name"
+              value={newCashierName}
+              onChangeText={setNewCashierName}
+            />
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter cashier's email"
+              value={newCashierEmail}
+              onChangeText={setNewCashierEmail}
+              keyboardType="email-address"
+            />
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.buttonClose]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.textStyle}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, styles.buttonSave]}
+                onPress={handleSaveNewCashier}
+              >
+                <Text style={styles.textStyle}>Save</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -147,7 +204,7 @@ const CashierManagement = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFCF0', // Consistent background color
+    backgroundColor: '#FFFCF0',
   },
   container: {
     flex: 1,
@@ -196,7 +253,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     flexDirection: 'row',
-    backgroundColor: '#355843', // Primary button color
+    backgroundColor: '#355843',
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 8,
@@ -217,8 +274,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   cashierListContent: {
-    paddingBottom: 20, // Space below the list
-    width: width * 0.9, // Adjust width to match container padding
+    paddingBottom: 20,
+    width: width * 0.9,
   },
   cashierCard: {
     backgroundColor: '#fff',
@@ -236,7 +293,7 @@ const styles = StyleSheet.create({
   cashierInfo: {
     marginBottom: 10,
   },
-  cashierId: { // Style for Cashier ID
+  cashierId: {
     fontSize: 12,
     color: '#999',
     marginBottom: 5,
@@ -263,7 +320,7 @@ const styles = StyleSheet.create({
   },
   cashierActions: {
     flexDirection: 'row',
-    justifyContent: 'flex-end', // Align action buttons to the right
+    justifyContent: 'flex-end',
     borderTopWidth: 1,
     borderTopColor: '#EAEAEA',
     paddingTop: 10,
@@ -274,7 +331,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    // backgroundColor: '#F0F0F0', // Optional: action button background
   },
   actionButtonText: {
     fontSize: 14,
@@ -286,6 +342,78 @@ const styles = StyleSheet.create({
     marginTop: 50,
     fontSize: 16,
     color: '#888',
+  },
+  // Style untuk Modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: '#FFFCF0',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: '90%',
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#D3D3D3',
+    borderRadius: 8,
+    padding: 15,
+    fontSize: 16,
+    marginBottom: 10,
+    backgroundColor: '#F9F9F9',
+  },
+  label: {
+    alignSelf: 'flex-start',
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+    marginTop: 15,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  modalButton: {
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    elevation: 2,
+    marginHorizontal: 10,
+    minWidth: 100,
+    alignItems: 'center',
+  },
+  buttonClose: {
+    backgroundColor: '#898989ff',
+  },
+  buttonSave: {
+    backgroundColor: '#355843',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 16,
   },
 });
 

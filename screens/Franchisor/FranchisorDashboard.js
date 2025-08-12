@@ -100,8 +100,13 @@ const FranchisorDashboard = () => {
         {/* Add Button */}
         <TouchableOpacity style={styles.addTypeButton} onPress={() => setModalVisible(true)}>
           <Text style={styles.addTypeText}>Add franchise type</Text>
-          <Ionicons name="add-circle" size={16} color="white" style={{ marginLeft: 5 }} />
+          <Image
+            source={require('../../assets/addfranchisor.png')}
+            style={{ width: 16, height: 16, marginLeft: 5 }}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
+
       </ScrollView>
 
       {/* Popup Modal */}

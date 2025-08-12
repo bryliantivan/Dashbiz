@@ -10,6 +10,7 @@ import {
   FlatList,
   Alert,
   Modal,
+  Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -108,11 +109,19 @@ const CashierManagement = ({ navigation }) => {
       </View>
       <View style={styles.cashierActions}>
         <TouchableOpacity style={styles.actionButton} onPress={() => handleEditCashier(item.id)}>
-          <Ionicons name="create-outline" size={20} color="#355843" />
+          <Image
+            source={require('../../assets/editicon.png')}
+            style={{ width: 20, height: 20 }}
+            resizeMode="contain"
+          />
           <Text style={styles.actionButtonText}>Edit</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.actionButton, { marginLeft: 10 }]} onPress={() => handleDeleteCashier(item.id)}>
-          <Ionicons name="trash-outline" size={20} color="#FF6347" />
+          <Image
+            source={require('../../assets/deleteicon.png')}
+            style={{ width: 20, height: 20 }}
+            resizeMode="contain"
+          />
           <Text style={styles.actionButtonText}>Delete</Text>
         </TouchableOpacity>
       </View>
@@ -127,7 +136,12 @@ const CashierManagement = ({ navigation }) => {
 
         {/* Search Bar */}
         <View style={styles.searchBarContainer}>
-          <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
+          <Image
+            source={require('../../assets/searchproduct.png')}
+            style={[styles.searchIcon, { width: 20, height: 20 }]}
+            resizeMode="contain"
+          />
+
           <TextInput
             style={styles.searchInput}
             placeholder="Search Cashier..."
@@ -138,7 +152,11 @@ const CashierManagement = ({ navigation }) => {
 
         {/* Add Cashier Button */}
         <TouchableOpacity style={styles.addButton} onPress={handleAddCashier}>
-          <Ionicons name="add-circle-outline" size={24} color="#fff" />
+          <Image
+            source={require('../../assets/addcashier.png')}
+            style={{ width: 24, height: 24 }}
+            resizeMode="contain"
+          />
           <Text style={styles.addButtonText}>Add New Cashier</Text>
         </TouchableOpacity>
 

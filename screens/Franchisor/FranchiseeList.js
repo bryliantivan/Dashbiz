@@ -8,6 +8,7 @@ import {
   Modal,
   TextInput,
   Alert,
+  Image
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -87,12 +88,17 @@ const FranchiseeList = () => {
         ))}
 
         <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => setAddModalVisible(true)}
-        >
-          <Text style={styles.addButtonText}>Add new franchisee</Text>
-          <Ionicons name="add-circle" size={16} style={{ marginLeft: 5, color: 'white' }} />
-        </TouchableOpacity>
+            style={styles.addButton}
+            onPress={() => setAddModalVisible(true)}
+          >
+            <Text style={styles.addButtonText}>Add new franchisee</Text>
+            <Image
+              source={require('../../assets/addfranchisor.png')}
+              style={{ width: 16, height: 16, marginLeft: 5 }}
+              resizeMode="contain"
+            />
+    </TouchableOpacity>
+
       </ScrollView>
 
       {/* Remove Access Modal */}

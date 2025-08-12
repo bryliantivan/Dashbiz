@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -46,7 +45,12 @@ const FranchiseCatalog = ({ navigation }) => {
 
         {/* Search Bar */}
         <View style={styles.searchBarContainer}>
-          <Ionicons name="search-outline" size={20} color="#888" style={styles.searchIcon} />
+          <Image
+            source={require('../../assets/searchproduct.png')}
+            style={[styles.searchIcon, { width: 20, height: 20 }]}
+            resizeMode="contain"
+          />
+
           <TextInput
             style={styles.searchInput}
             placeholder="Search..."

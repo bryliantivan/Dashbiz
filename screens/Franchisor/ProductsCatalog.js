@@ -10,7 +10,6 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
@@ -101,12 +100,18 @@ const ProductsCatalog = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Products Catalog</Text>
 
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search.."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-      />
+      <View style={styles.searchContainer}>
+        <Image
+          source={require('../../assets/searchproduct.png')}
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search.."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+      </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {filteredProducts.map((product) => (
@@ -124,7 +129,10 @@ const ProductsCatalog = () => {
               <Text style={styles.productPrice}>{product.price}</Text>
             </View>
             <TouchableOpacity onPress={() => handleDeleteProduct(product.id)}>
-              <Ionicons name="trash-bin" size={20} color="#000" />
+              <Image
+                source={require('../../assets/deleteproduct.jpg')}
+                style={{ width: 20, height: 20 }}
+              />
             </TouchableOpacity>
           </View>
         ))}
@@ -134,7 +142,10 @@ const ProductsCatalog = () => {
           onPress={() => setModalVisible(true)}
         >
           <Text style={styles.addProductText}>Add new product</Text>
-          <Ionicons name="add-circle" size={20} color="white" />
+          <Image
+            source={require('../../assets/addproduct.png')}
+            style={{ width: 16, height: 16 }}
+          />
         </TouchableOpacity>
       </ScrollView>
 
@@ -162,7 +173,6 @@ const ProductsCatalog = () => {
 
             <Text style={styles.label}>Image</Text>
             <Pressable onPress={handleImagePick} style={styles.imagePickerBox}>
-              <Ionicons name="add-circle-outline" size={20} color="#333" />
               <Text style={{ fontSize: 16 }}>
                 {newProductImageUri ? `Selected` : 'Add Image'}
               </Text>
@@ -206,13 +216,24 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingTop: 20
   },
-  searchInput: {
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#999',
     borderRadius: 20,
-    paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     marginBottom: 15,
+    backgroundColor: 'white'
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    paddingVertical: 8,
   },
   productCard: {
     flexDirection: 'row',
@@ -223,7 +244,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: '#D3D3D3',
-    shadowColor: '#000', // Efek bayangan
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,

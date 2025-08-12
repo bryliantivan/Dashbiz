@@ -256,7 +256,6 @@ const styles = StyleSheet.create({
   addTypeText: {
     fontSize: 14,
     color: 'white',
-    fontWeight: 'bold'
   },
   input: {
     borderWidth: 1,

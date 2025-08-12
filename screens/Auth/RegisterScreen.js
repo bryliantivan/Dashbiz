@@ -10,7 +10,6 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,26 +24,19 @@ const RegisterScreen = ({ navigation }) => {
   const handleRegister = () => {
     if (password === confirmPassword) {
       console.log('Registering user:', { name, email, password });
-      // TODO: Implement registration logic
-      // If successful, navigate to Login screen
       navigation.navigate('Login');
     } else {
       console.warn('Password and Confirm Password do not match!');
-      // You can display an alert or error message on the UI
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Tombol Back */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
 
         {/* Logo */}
         <Image
-          source={require('../../assets/ChatimeLogo.png')} // Temporary logo
+          source={require('../../assets/Logo Dashbiz.png')}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -55,7 +47,10 @@ const RegisterScreen = ({ navigation }) => {
         {/* Name Input */}
         <Text style={styles.inputLabel}>Name</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="person-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/usericon.png')}
+            style={styles.inputIconImg}
+          />
           <TextInput
             style={styles.input}
             placeholder="name"
@@ -68,7 +63,10 @@ const RegisterScreen = ({ navigation }) => {
         {/* Email Input */}
         <Text style={styles.inputLabel}>Email</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/email.png')}
+            style={styles.inputIconImg}
+          />
           <TextInput
             style={styles.input}
             placeholder="email"
@@ -82,7 +80,10 @@ const RegisterScreen = ({ navigation }) => {
         {/* Password Input */}
         <Text style={styles.inputLabel}>Password</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/lock.png')}
+            style={styles.inputIconImg}
+          />
           <TextInput
             style={styles.input}
             placeholder="password"
@@ -90,15 +91,28 @@ const RegisterScreen = ({ navigation }) => {
             value={password}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.passwordToggle}>
-            <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#888" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.passwordToggle}
+          >
+            <Image
+              source={
+                showPassword
+                  ? require('../../assets/eyeclosed.png') // <- your "eye-off" image
+                  : require('../../assets/togglepassword.png')     // <- your "eye" image
+              }
+              style={{ width: 20, height: 20, tintColor: '#888' }}
+            />
           </TouchableOpacity>
         </View>
 
         {/* Confirm Password Input */}
         <Text style={styles.inputLabel}>Confirm Password</Text>
         <View style={styles.inputContainer}>
-          <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/lock.png')}
+            style={styles.inputIconImg}
+          />
           <TextInput
             style={styles.input}
             placeholder="confirm password"
@@ -106,8 +120,18 @@ const RegisterScreen = ({ navigation }) => {
             value={confirmPassword}
             onChangeText={setConfirmPassword}
           />
-          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.passwordToggle}>
-            <Ionicons name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#888" />
+          <TouchableOpacity
+            onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+            style={styles.passwordToggle}
+          >
+            <Image
+              source={
+                showConfirmPassword
+                  ? require('../../assets/eyeclosed.png')
+                  : require('../../assets/togglepassword.png')
+              }
+              style={{ width: 20, height: 20, tintColor: '#888' }}
+            />
           </TouchableOpacity>
         </View>
 
@@ -128,28 +152,18 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFCF0', // Background color from the image
+    backgroundColor: '#FFFCF0',
   },
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: height * 0.05, // Adjusted top padding
+    paddingTop: height * 0.05,
     backgroundColor: '#FFFCF0',
   },
-  backButton: {
-    position: 'absolute',
-    top: 20, 
-    left: 20,
-    zIndex: 1, 
-    padding: 10, 
-  },
   logo: {
-    width: width * 0.3, // Responsive logo size
+    width: width * 0.3,
     height: width * 0.3,
     marginBottom: 20,
-    borderWidth: 1, // Border for placeholder logo
-    borderColor: '#000',
-    borderRadius: 10, // Rounded corners for placeholder logo
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '10%',
@@ -175,13 +189,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 15, // Spacing between inputs
+    marginBottom: 15,
     borderWidth: 1,
     borderColor: '#D3D3D3',
     height: 50,
   },
-  inputIcon: {
+  inputIconImg: {
+    width: 20,
+    height: 20,
     marginRight: 10,
+    tintColor: '#888',
+    resizeMode: 'contain',
   },
   input: {
     flex: 1,
@@ -192,11 +210,11 @@ const styles = StyleSheet.create({
   },
   registerButton: {
     width: '80%',
-    backgroundColor: '#355843', // Button color matching theme
+    backgroundColor: '#355843',
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 20, // Spacing from last input
+    marginTop: 20,
     marginBottom: 20,
   },
   registerButtonText: {

@@ -10,7 +10,6 @@ import {
   SafeAreaView,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -37,6 +36,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        {/* Logo */}
         <Image
           source={require('../../assets/Logo Dashbiz.png')}
           style={styles.logo}
@@ -45,38 +45,32 @@ const LoginScreen = ({ navigation }) => {
 
         <Text style={styles.loginText}>LOGIN</Text>
 
+        {/* Role buttons */}
         <View style={styles.roleButtonsContainer}>
-          <TouchableOpacity
-            style={[styles.roleButton, selectedRole === 'Owner' && styles.roleButtonFocused]}
-            onPress={() => setSelectedRole('Owner')}
-          >
-            <Text style={[styles.roleButtonText, selectedRole === 'Owner' && styles.roleButtonTextFocused]}>Owner</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.roleButton, selectedRole === 'Cashier' && styles.roleButtonFocused]}
-            onPress={() => setSelectedRole('Cashier')}
-          >
-            <Text style={[styles.roleButtonText, selectedRole === 'Cashier' && styles.roleButtonTextFocused]}>Cashier</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.roleButton, selectedRole === 'Franchisor' && styles.roleButtonFocused]}
-            onPress={() => setSelectedRole('Franchisor')}
-          >
-            <Text style={[styles.roleButtonText, selectedRole === 'Franchisor' && styles.roleButtonTextFocused]}>Franchisor</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.roleButton, selectedRole === 'Admin' && styles.roleButtonFocused]}
-            onPress={() => setSelectedRole('Admin')}
-          >
-            <Text style={[styles.roleButtonText, selectedRole === 'Admin' && styles.roleButtonTextFocused]}>Admin</Text>
-          </TouchableOpacity>
+          {['Owner', 'Cashier', 'Franchisor', 'Admin'].map((role) => (
+            <TouchableOpacity
+              key={role}
+              style={[styles.roleButton, selectedRole === role && styles.roleButtonFocused]}
+              onPress={() => setSelectedRole(role)}
+            >
+              <Text
+                style={[
+                  styles.roleButtonText,
+                  selectedRole === role && styles.roleButtonTextFocused,
+                ]}
+              >
+                {role}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
+        {/* Email input */}
         <View style={styles.inputContainer}>
-          <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/email.png')}
+            style={styles.inputIcon}
+          />
           <TextInput
             style={styles.input}
             placeholder="email"
@@ -87,8 +81,12 @@ const LoginScreen = ({ navigation }) => {
           />
         </View>
 
+        {/* Password input */}
         <View style={styles.inputContainer}>
-          <Ionicons name="lock-closed-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/lock.png')}
+            style={styles.inputIcon}
+          />
           <TextInput
             style={styles.input}
             placeholder="password"
@@ -96,19 +94,35 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={setPassword}
           />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.passwordToggle}>
-            <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color="#888" />
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.passwordToggle}
+          >
+            <Image
+              source={
+                showPassword
+                  ? require('../../assets/eyeclosed.png')
+                  : require('../../assets/togglepassword.png')
+              }
+              style={{ width: 20, height: 20, resizeMode: 'contain' }}
+            />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.forgotPasswordButton} onPress={() => navigation.navigate('ForgotPassword')}>
+        {/* Forgot password */}
+        <TouchableOpacity
+          style={styles.forgotPasswordButton}
+          onPress={() => navigation.navigate('ForgotPassword')}
+        >
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
 
+        {/* Login button */}
         <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
+        {/* Register link */}
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.notRegisteredText}>I'm not registered yet</Text>
         </TouchableOpacity>
@@ -185,6 +199,9 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
   },
   inputIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
     marginRight: 10,
   },
   input: {

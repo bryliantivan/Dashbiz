@@ -8,8 +8,8 @@ import {
   TextInput,
   SafeAreaView,
   Dimensions,
+  Image,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Pastikan Anda sudah menginstal @expo/vector-icons
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,27 +17,39 @@ const ForgotPasswordScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
 
   const handleSendCode = () => {
-    // Logika untuk mengirim kode verifikasi
     console.log('Mengirim kode verifikasi ke:', email);
-    // Navigasi ke halaman verifikasi
     navigation.navigate('VerifyCode');
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Tombol Back */}
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+        {/* Tombol Back dengan efek opacity */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+          activeOpacity={0.6} // efek tekan
+        >
+          <Image
+            source={require('../../assets/back.png')}
+            style={styles.backIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
 
         {/* Judul */}
         <Text style={styles.title}>FORGOT PASSWORD</Text>
-        <Text style={styles.subtitle}>Please enter your email to receive verification code</Text>
+        <Text style={styles.subtitle}>
+          Please enter your email to receive verification code
+        </Text>
 
         {/* Input Email */}
         <View style={styles.inputContainer}>
-          <Ionicons name="mail-outline" size={20} color="#888" style={styles.inputIcon} />
+          <Image
+            source={require('../../assets/email.png')}
+            style={styles.inputIcon}
+            resizeMode="contain"
+          />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -60,34 +72,38 @@ const ForgotPasswordScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#FFFCF0', // Warna latar belakang sesuai gambar
+    backgroundColor: '#FFFCF0',
   },
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: height * 0.05, // Sesuaikan padding atas
+    paddingTop: height * 0.05,
     backgroundColor: '#FFFCF0',
   },
   backButton: {
     position: 'absolute',
-    top: 20, // Sesuaikan posisi vertikal
-    left: 20, // Sesuaikan posisi horizontal
-    zIndex: 1, // Pastikan tombol di atas elemen lain
-    padding: 10, // Area sentuh yang lebih besar
+    top: 20,
+    left: 20,
+    zIndex: 1,
+    padding: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#000',
-    marginTop: height * 0.1, // Sesuaikan jarak dari atas
+    marginTop: height * 0.1,
   },
   subtitle: {
     fontSize: 14,
     color: '#888',
     textAlign: 'center',
     marginBottom: 30,
-    paddingHorizontal: width * 0.1, // Agar teks tidak terlalu lebar
+    paddingHorizontal: width * 0.1,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -96,12 +112,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     paddingHorizontal: 15,
-    marginBottom: 30, // Jarak ke tombol Send Code
+    marginBottom: 30,
     borderWidth: 1,
     borderColor: '#D3D3D3',
-    height: 50, // Tinggi input
+    height: 50,
   },
   inputIcon: {
+    width: 20,
+    height: 20,
     marginRight: 10,
   },
   input: {
@@ -110,7 +128,7 @@ const styles = StyleSheet.create({
   },
   sendCodeButton: {
     width: '80%',
-    backgroundColor: '#355843', // Warna tombol sesuai tema
+    backgroundColor: '#355843',
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: 'center',

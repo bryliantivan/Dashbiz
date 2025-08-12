@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { Image, TouchableOpacity } from 'react-native';
 
 // Import screens Auth
 import LoginScreen from './screens/Auth/LoginScreen';
@@ -66,19 +67,37 @@ const FranchisorTabNavigator = () => (
         height: 80,
         paddingTop: 8,
       },
+      tabBarButton: (props) => (
+        <TouchableOpacity {...props} activeOpacity={0.6} />
+      ),
       tabBarIcon: ({ focused }) => {
-        let iconName;
-        if (route.name === 'Dashboard') iconName = focused ? 'grid' : 'grid-outline';
-        else if (route.name === 'Franchise') iconName = focused ? 'storefront' : 'storefront-outline';
-        else if (route.name === 'Products') iconName = focused ? 'archive' : 'archive-outline';
-        else if (route.name === 'Profile') iconName = focused ? 'person' : 'person-outline';
+        let iconSource;
 
-        return <Ionicons name={iconName} size={24} color="#fff" />;
+        if (route.name === 'Dashboard')
+          iconSource = require('./assets/dashboard.png');
+        else if (route.name === 'Franchise')
+          iconSource = require('./assets/franchise.png');
+        else if (route.name === 'Products')
+          iconSource = require('./assets/products.png');
+        else if (route.name === 'Profile')
+          iconSource = require('./assets/profile.png');
+
+        return (
+          <Image
+            source={iconSource}
+            style={{
+              width: 28,
+              height: 28,
+              opacity: focused ? 1 : 0.5,
+              resizeMode: 'contain',
+            }}
+          />
+        );
       },
       tabBarLabelStyle: {
         color: '#fff',
         marginBottom: 5,
-      }
+      },
     })}
   >
     <Tab.Screen name="Dashboard" component={FranchisorDashboardStackScreen} />
@@ -98,14 +117,35 @@ const OwnerTabNavigator = () => (
         height: 80,
         paddingTop: 8,
       },
+      tabBarButton: (props) => (
+        <TouchableOpacity
+          {...props}
+          activeOpacity={0.6} // opacity when pressed
+        />
+      ),
       tabBarIcon: ({ focused }) => {
-        let iconName;
-        if (route.name === 'OwnerDashboardTab') iconName = focused ? 'grid' : 'grid-outline';
-        else if (route.name === 'FranchiseCatalogTab') iconName = focused ? 'storefront' : 'storefront-outline';
-        else if (route.name === 'CashierManagementTab') iconName = focused ? 'people' : 'people-outline';
-        else if (route.name === 'OwnerProfileTab') iconName = focused ? 'person' : 'person-outline';
+        let iconSource;
 
-        return <Ionicons name={iconName} size={24} color="#fff" />;
+        if (route.name === 'OwnerDashboardTab')
+          iconSource = require('./assets/dashboard.png');
+        else if (route.name === 'FranchiseCatalogTab')
+          iconSource = require('./assets/franchise.png');
+        else if (route.name === 'CashierManagementTab')
+          iconSource = require('./assets/cashier.png');
+        else if (route.name === 'OwnerProfileTab')
+          iconSource = require('./assets/profile.png');
+
+        return (
+          <Image
+            source={iconSource}
+            style={{
+              width: 28,
+              height: 28,
+              opacity: focused ? 1 : 0.5, // high opacity when focused
+              resizeMode: 'contain',
+            }}
+          />
+        );
       },
       tabBarLabelStyle: {
         color: '#fff',
@@ -113,12 +153,29 @@ const OwnerTabNavigator = () => (
       }
     })}
   >
-    <Tab.Screen name="OwnerDashboardTab" component={OwnerDashboard} options={{ title: 'Dashboard' }} />
-    <Tab.Screen name="FranchiseCatalogTab" component={FranchiseCatalog} options={{ title: 'Franchise' }} />
-    <Tab.Screen name="CashierManagementTab" component={CashierManagement} options={{ title: 'Cashier' }} />
-    <Tab.Screen name="OwnerProfileTab" component={OwnerProfile} options={{ title: 'Profile' }} />
+    <Tab.Screen
+      name="OwnerDashboardTab"
+      component={OwnerDashboard}
+      options={{ title: 'Dashboard' }}
+    />
+    <Tab.Screen
+      name="FranchiseCatalogTab"
+      component={FranchiseCatalog}
+      options={{ title: 'Franchise' }}
+    />
+    <Tab.Screen
+      name="CashierManagementTab"
+      component={CashierManagement}
+      options={{ title: 'Cashier' }}
+    />
+    <Tab.Screen
+      name="OwnerProfileTab"
+      component={OwnerProfile}
+      options={{ title: 'Profile' }}
+    />
   </Tab.Navigator>
 );
+
 
 export default function App() {
   return (

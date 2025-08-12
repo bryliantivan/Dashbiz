@@ -9,8 +9,8 @@ import {
   SafeAreaView,
   Dimensions,
   Keyboard,
+  Image
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -45,8 +45,16 @@ const VerifyCodeScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+        <TouchableOpacity
+                  style={styles.backButton}
+                  onPress={() => navigation.goBack()}
+                  activeOpacity={0.6} // efek tekan
+                >
+                  <Image
+                    source={require('../../assets/back.png')}
+                    style={styles.backIcon}
+                    resizeMode="contain"
+                  />
         </TouchableOpacity>
 
         <Text style={styles.title}>VERIFY YOUR EMAIL</Text>
@@ -160,6 +168,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 1,
+    padding: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
   },
 });
 

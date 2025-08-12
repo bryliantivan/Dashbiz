@@ -16,13 +16,13 @@ const { width, height } = Dimensions.get('window');
 // Data dummy untuk daftar franchise dengan logo yang diperbarui
 const franchises = [
   { id: '1', name: 'Chatime', monthlySales: 'Rp12.345.678', logo: require('../../assets/ChatimeLogo.png') },
-  { id: '2', name: 'Tomoro Coffee', monthlySales: 'Rp9.876.543', logo: require('../../assets/CFCLogo.png') }, // Placeholder, as per your input
-  { id: '3', name: "Domino's Pizza", monthlySales: 'Rp5.678.901', logo: require('../../assets/ForeLogo.png') }, // Placeholder, as per your input
-  { id: '4', name: 'Subway', monthlySales: 'Rp2.345.678', logo: require('../../assets/JCOLogo.png') }, // Placeholder, as per your input
-  { id: '5', name: 'Fore', monthlySales: 'Rp7.890.123', logo: require('../../assets/KrispyKremeLogo.png') }, // Placeholder, as per your input
-  { id: '6', name: 'Pagi Sore', monthlySales: 'Rp4.567.890', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder, as per your input
-  { id: '7', name: 'Mixue', monthlySales: 'Rp3.123.456', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
-  { id: '8', name: 'Kopi Kenangan', monthlySales: 'Rp6.543.210', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
+  { id: '2', name: 'CFC', monthlySales: 'Rp9.876.543', logo: require('../../assets/CFCLogo.png') }, // Placeholder, as per your input
+  { id: '3', name: "Fore", monthlySales: 'Rp5.678.901', logo: require('../../assets/ForeLogo.png') }, // Placeholder, as per your input
+  { id: '4', name: 'JCO', monthlySales: 'Rp2.345.678', logo: require('../../assets/JCOLogo.png') }, // Placeholder, as per your input
+  { id: '5', name: 'Krispy Kreme', monthlySales: 'Rp7.890.123', logo: require('../../assets/KrispyKremeLogo.png') }, // Placeholder, as per your input
+  { id: '6', name: 'Pizza Hut', monthlySales: 'Rp4.567.890', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder, as per your input
+  { id: '7', name: 'Red Dog', monthlySales: 'Rp3.123.456', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
+  { id: '8', name: 'Subway', monthlySales: 'Rp6.543.210', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
 ];
 
 const OwnerDashboard = ({ navigation }) => {

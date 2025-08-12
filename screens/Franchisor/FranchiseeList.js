@@ -10,7 +10,6 @@ import {
   Alert,
   Image
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 const initialFranchises = [
   { id: '1', name: 'William', joined: '25 May 2000', category: 'Chatime A', location: 'Mayor Street' },
@@ -72,7 +71,13 @@ const FranchiseeList = () => {
         {franchisees.map((f, index) => (
           <View key={f.id} style={styles.card}>
             <Text style={styles.franchiseeName}>{f.name}</Text>
-            <Text>🗓 Joined : {f.joined}</Text>
+            <View style = {styles.DateView}>
+              <Image
+                source={require('../../assets/datebox.png')}
+                style={styles.DateIcon}
+              />
+            <Text>Joined : {f.joined}</Text>
+            </View>
             <Text>Category: {f.category}</Text>
             <Text>Location: {f.location}</Text>
             <TouchableOpacity
@@ -295,5 +300,13 @@ const styles = StyleSheet.create({
   removeConfirmText: {
     fontWeight: 'bold',
     color: 'white',
+  },
+  DateIcon: {
+    resizeMode: 'contain',
+  },
+  DateView: {
+    flexDirection: 'row',
+    gap: 5,
+    alignItems: 'center',
   },
 });

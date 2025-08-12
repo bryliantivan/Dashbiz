@@ -60,14 +60,24 @@ const FranchisorDashboard = () => {
           <View style={styles.franchiseInfo}>
             <Text style={styles.franchiseLabel}>FRANCHISE</Text>
             <View style={styles.row}>
-              <Text>★ 4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
+              <Image
+                source={require('../../assets/starhalf.png')}
+                style={styles.DateIcon}
+              /> 
+              <Text>4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
             </View>
             <View style={styles.row}>
-              <MaterialCommunityIcons name="calendar" size={16} />
+              <Image
+                source={require('../../assets/datecommenced.png')}
+                style={styles.DateIcon}
+              />
               <Text style={styles.infoText}> Date Franchising Commenced : 2023</Text>
             </View>
             <View style={styles.row}>
-              <MaterialCommunityIcons name="store" size={16} />
+              <Image
+                source={require('../../assets/outlet.png')}
+                style={styles.DateIcon}
+              />
               <Text style={styles.infoText}> Number of Outlets : 460</Text>
             </View>
           </View>
@@ -113,7 +123,10 @@ const FranchisorDashboard = () => {
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <ScrollView style={styles.container}>
           <TouchableOpacity onPress={() => setModalVisible(false)}>
-            <Ionicons name="arrow-back" size={24} color="black" />
+            <Image
+              source={require('../../assets/back.png')}
+              style={styles.BackIcon}
+            />
           </TouchableOpacity>
           <Text style={styles.title}>ADD NEW FRANCHISE TYPE</Text>
 
@@ -149,7 +162,10 @@ const FranchisorDashboard = () => {
 
           <Text>Image</Text>
           <TouchableOpacity style={styles.imagePicker} onPress={handleImagePick}>
-            <Ionicons name="add-circle" size={20} color="black" />
+            <Image
+              source={require('../../assets/addimage.png')}
+              style={styles.AddIcon}
+            />
             <Text style={{ marginLeft: 8 }}>Add Image</Text>
           </TouchableOpacity>
 
@@ -202,7 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   dot: {
-    marginHorizontal: 5,
+    marginHorizontal: 10,
   },
   infoText: {
     fontSize: 14,
@@ -289,6 +305,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  AddIcon: {
+    width: 18,
+    height: 18,
+    resizeMode: 'contain',
+  },
+  BackIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  DateIcon: {
+    width: 14,
+    height: 14,
+    resizeMode: 'contain',
+    marginRight: 8
   },
 });
 

@@ -42,9 +42,27 @@ const FranchisorProfile = () => {
           <Image source={require('../../assets/ChatimeLogo.png')} style={styles.logo} />
           <View style={styles.franchiseDetails}>
             <Text style={styles.franchiseInfo}>CHATIME</Text>
-            <Text>★ 4.6 | 2005</Text>
-            <Text>▪ Date Franchising Commenced: 2023</Text>
-            <Text>▪ Number of Outlets: 460</Text>
+            <View style={styles.row}>
+                          <Image
+                            source={require('../../assets/starhalf.png')}
+                            style={styles.DateIcon}
+                          /> 
+                          <Text>4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
+                        </View>
+                        <View style={styles.row}>
+                          <Image
+                            source={require('../../assets/datecommenced.png')}
+                            style={styles.DateIcon}
+                          />
+                          <Text style={styles.infoText}> Date Franchising Commenced : 2023</Text>
+                        </View>
+                        <View style={styles.row}>
+                          <Image
+                            source={require('../../assets/outlet.png')}
+                            style={styles.DateIcon}
+                          />
+                          <Text style={styles.infoText}> Number of Outlets : 460</Text>
+                        </View>
           </View>
         </View>
         <Text style={styles.description}>
@@ -95,7 +113,10 @@ const FranchisorProfile = () => {
             <Text style={styles.editText}>Edit Franchise Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-            <Icon name="sign-out" size={20} color="#355843" />
+            <Image
+              source={require('../../assets/logout.png')}
+              style={styles.logoutIcon}
+            />
             <Text style={styles.logoutText}>Log Out</Text>
           </TouchableOpacity>
         </View>
@@ -128,6 +149,25 @@ const styles = StyleSheet.create({
   editText: { color: '#fff', fontWeight: 'bold', fontSize: 14 },
   logoutButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10, marginTop: 10 },
   logoutText: { color: '#355843', marginLeft: 5 },
+  logoutIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  dot: {
+    marginHorizontal: 10,
+  },
+DateIcon: {
+    width: 14,
+    height: 14,
+    resizeMode: 'contain',
+    marginRight: 8
+  },
 });
 
 export default FranchisorProfile;

@@ -9,7 +9,6 @@ import {
   Image,
   FlatList,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const initialMenus = [
@@ -106,7 +105,10 @@ export default function AssignedFranchise() {
     <View style={styles.container}>
       <View style={styles.topBar}>
       <TouchableOpacity onPress={() => navigation.navigate('CashierDashboard')}>
-        <Ionicons name="arrow-back" size={24} color="black" />
+        <Image
+            source={require('../../assets/back.png')}
+            style={styles.BackIcon}
+        />
       </TouchableOpacity>
       <Text style={styles.topBarTitle}>Franchise</Text>
       <View style={{ width: 24 }} />
@@ -126,7 +128,10 @@ export default function AssignedFranchise() {
 
       {/* Search */}
       <View style={styles.searchBox}>
-        <Ionicons name="search-outline" size={20} />
+        <Image
+            source={require('../../assets/searchproduct.png')}
+            style={styles.SearchIcon}
+        />
         <TextInput
           placeholder="Search Menu"
           placeholderTextColor="#aaa"
@@ -164,11 +169,17 @@ export default function AssignedFranchise() {
                 </View>
                 <View style={styles.qtyBox}>
                 <TouchableOpacity onPress={() => handleQuantityChange(item.id, -1)}>
-                    <Ionicons name="remove-circle-outline" size={24} />
+                    <Image
+                        source={require('../../assets/minbtn.png')}
+                        style={styles.AddMinIcon}
+                    />
                 </TouchableOpacity>
                 <Text style={{ marginHorizontal: 10 }}>{qty}</Text>
                 <TouchableOpacity onPress={() => handleQuantityChange(item.id, 1)}>
-                    <Ionicons name="add-circle-outline" size={24} />
+                    <Image
+                        source={require('../../assets/plusbtn.png')}
+                        style={styles.AddMinIcon}
+                    />
                 </TouchableOpacity>
                 </View>
             </View>
@@ -342,5 +353,20 @@ const styles = StyleSheet.create({
   },
   orderPrice: {
     fontWeight: 'bold',
+  },
+  BackIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  SearchIcon: {
+    width: 22,
+    height: 22,
+    resizeMode: 'contain',
+  },
+  AddMinIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
   },
 });

@@ -77,7 +77,10 @@ const FranchisorDetail = ({ navigation, route }) => {
         {/* Header dengan tombol Back */}
         <View style={styles.headerBar}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
+              <Image
+                source={require('../../assets/back.png')}
+                style={styles.BackIcon}
+              />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>FRANCHISE DETAILS</Text>
         </View>
@@ -92,15 +95,27 @@ const FranchisorDetail = ({ navigation, route }) => {
           <View style={styles.franchiseTextInfo}>
             <Text style={styles.franchiseMainName}>{franchiseData.name}</Text>
             <View style={styles.infoRow}>
-              <Ionicons name="star" size={16} color="#FFD700" />
-              <Text style={styles.infoText}>{franchiseData.rating}</Text>
-              <Text style={styles.infoSeparator}>|</Text>
-              <Ionicons name="calendar-outline" size={16} color="#555" />
-              <Text style={styles.infoText}>Since {franchiseData.dateFranchising}</Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Ionicons name="location-outline" size={16} color="#555" />
-              <Text style={styles.infoText}>Number Of Outlets : {franchiseData.numOutlets}</Text>
+<View style={styles.row}>
+                          <Image
+                            source={require('../../assets/starhalf.png')}
+                            style={styles.StarIcon}
+                          /> 
+                          <Text>4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
+                        </View>
+                        <View style={styles.row}>
+                          <Image
+                            source={require('../../assets/datecommenced.png')}
+                            style={styles.DateIcon}
+                          />
+                          <Text style={styles.infoText}> Date Franchising Commenced : 2023</Text>
+                        </View>
+                        <View style={styles.row}>
+                          <Image
+                            source={require('../../assets/outlet.png')}
+                            style={styles.DateIcon}
+                          />
+                          <Text style={styles.infoText}> Number of Outlets : 460</Text>
+                        </View>
             </View>
           </View>
         </View>
@@ -202,13 +217,11 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     marginBottom: 5,
   },
   infoText: {
     fontSize: 14,
-    color: '#555',
     marginLeft: 5,
   },
   infoSeparator: {
@@ -301,6 +314,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#355843', // Teks hijau gelap
+  },
+    row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  dot: {
+    marginHorizontal: 10,
+  },
+DateIcon: {
+    width: 14,
+    height: 14,
+    resizeMode: 'contain',
+  },
+StarIcon: {
+    width: 14,
+    height: 14,
+    resizeMode: 'contain',
+    marginRight: 8
   },
 });
 

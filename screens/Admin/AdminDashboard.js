@@ -85,7 +85,10 @@ const AdminDashboard = () => {
             <View style={styles.header}>
                 <Text style={styles.title}>Dashboard</Text>
                 <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                    <Icon name="sign-out" size={24} color="#355E3B" />
+                    <Image
+                        source={require('../../assets/logout.png')}
+                        style={styles.logoutIcon}
+                    />
                 </TouchableOpacity>
             </View>
 
@@ -258,6 +261,11 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         color: '#888',
         fontSize: 14,
+    },
+    logoutIcon: {
+        width: 24,
+        height: 24,
+        resizeMode: 'contain',
     },
 });
 

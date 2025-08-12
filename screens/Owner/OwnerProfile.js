@@ -90,7 +90,10 @@ const OwnerProfile = () => {
         />
 
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-          <Icon name="sign-out" size={20} color="green" />
+          <Image
+            source={require('../../assets/logout.png')}
+            style={styles.logoutIcon}
+          />
           <Text style={styles.logoutText}>Log Out</Text>
         </TouchableOpacity>
 
@@ -116,7 +119,10 @@ const OwnerProfile = () => {
                 <>
                   <Text style={styles.ownerName}>{ownerName}</Text>
                   <TouchableOpacity onPress={() => setIsEditingName(true)}>
-                    <Icon name="pencil" size={18} color="#000" style={{ marginLeft: 8 }} />
+                    <Image
+                      source={require('../../assets/pencil.png')}
+                      style={styles.PencilIcon}
+                    />
                   </TouchableOpacity>
                 </>
               )}
@@ -354,6 +360,17 @@ const styles = StyleSheet.create({
   closeButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  logoutIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  PencilIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    marginLeft: 8
   },
 });
 

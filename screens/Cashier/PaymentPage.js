@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Modal,
   Pressable,
+  Image
 } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
@@ -39,7 +40,10 @@ const PaymentPage = ({ navigation, route }) => {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} />
+          <Image
+            source={require('../../assets/back.png')}
+            style={styles.BackIcon}
+        />
         </TouchableOpacity>
         <Text style={styles.title}>Order #1225</Text>
         <View style={{ width: 24 }} />
@@ -73,11 +77,17 @@ const PaymentPage = ({ navigation, route }) => {
         >
           <View style={styles.iconWrap}>
             {method === 'Cash' ? (
-              <FontAwesome5 name="money-bill-wave" size={18} />
+              <Image
+                source={require('../../assets/cash.png')}
+              />
             ) : method === 'QRIS' ? (
-              <MaterialIcons name="qr-code-scanner" size={18} />
+              <Image
+                source={require('../../assets/qris.png')}
+              />
             ) : (
-              <FontAwesome5 name="credit-card" size={18} />
+              <Image
+                source={require('../../assets/debit.png')}
+              />
             )}
           </View>
           <Text style={styles.paymentText}>{method}</Text>
@@ -110,8 +120,7 @@ const PaymentPage = ({ navigation, route }) => {
 
       {/* Pay Button */}
       <TouchableOpacity style={styles.payBtn} onPress={handlePay}>
-        <Ionicons name="arrow-forward" color="#fff" size={18} />
-        <Text style={styles.payText}>Pay</Text>
+        <Text style={styles.payText}>Pay →</Text>
       </TouchableOpacity>
 
       {/* Modal */}
@@ -119,7 +128,10 @@ const PaymentPage = ({ navigation, route }) => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
             <View style={styles.successIcon}>
-              <Ionicons name="checkmark" size={32} color="white" />
+              <Image
+                source={require('../../assets/success.png')}
+                style={styles.SuccessIcon}
+              />
             </View>
             <Text style={styles.modalTitle}>Payment Success</Text>
 
@@ -255,7 +267,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   successIcon: {
-    backgroundColor: 'green',
     padding: 12,
     borderRadius: 30,
     marginBottom: 10,
@@ -288,5 +299,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 8,
     borderRadius: 6,
+  },
+  BackIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  SuccessIcon: {
+    width: 50,
+    height: 50,
   },
 });

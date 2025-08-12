@@ -40,7 +40,10 @@ const EditProfileFranchisor = () => {
           style={styles.logo}
         />
         <TouchableOpacity style={styles.editIcon} onPress={pickLogo}>
-          <Ionicons name="pencil" size={16} color="white" />
+          <Image
+              source={require('../../assets/whitepencil.png')}
+              style={styles.PencilIcon}
+           />
         </TouchableOpacity>
       </View>
 
@@ -65,7 +68,10 @@ const EditProfileFranchisor = () => {
 
       <Text style={styles.label}>Image</Text>
       <TouchableOpacity style={styles.imagePicker} onPress={pickGalleryImage}>
-        <Ionicons name="add-circle" size={20} color="black" />
+        <Image
+            source={require('../../assets/addimage.png')}
+            style={styles.AddIcon}
+        />
         <Text style={styles.addImageText}>Add Image</Text>
       </TouchableOpacity>
 
@@ -172,6 +178,16 @@ const styles = StyleSheet.create({
   saveText: {
     fontWeight: 'bold',
     color: '#000',
+  },
+  PencilIcon: {
+    width: 14,
+    height: 14,
+    resizeMode: 'contain',
+  },
+  AddIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
   },
 });
 

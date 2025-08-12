@@ -40,7 +40,9 @@ export default function CashierDashboard() {
         <Text style={styles.headerTextCentered}>
             <TouchableOpacity onPress={() => setDropdownVisible(!dropdownVisible)} style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.headerText}>Cashier</Text>
-            <Ionicons name="chevron-down" size={16} />
+            <Image
+              source={require('../../assets/dropdown.png')}
+           />
             </TouchableOpacity>
         </Text>
         {dropdownVisible && (
@@ -48,7 +50,10 @@ export default function CashierDashboard() {
             style={styles.logoutDropdown}
             onPress={() => navigation.navigate('Login')}
             >
-            <Ionicons name="log-out-outline" size={16} color="green" style={{ marginRight: 6 }} />
+            <Image
+              source={require('../../assets/logout.png')}
+              style={styles.logoutIcon}
+            />
             <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
         )}
@@ -102,7 +107,11 @@ export default function CashierDashboard() {
               ) : (
                 <TouchableOpacity onPress={() => setEditingName(true)}>
                   <Text style={styles.editNameLabel}>
-                    {tempName} <Ionicons name="pencil" />
+                    {tempName} 
+                    <Image
+                      source={require('../../assets/pencil.png')}
+                      style={styles.PencilIcon}
+                    />
                   </Text>
                 </TouchableOpacity>
               )}
@@ -165,6 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 5
   },
   logoutText: {
     color: 'green',
@@ -289,5 +299,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  PencilIcon: {
+    width: 18,
+    height: 18,
+    resizeMode: 'contain',
+    marginLeft: 10,
   },
 });

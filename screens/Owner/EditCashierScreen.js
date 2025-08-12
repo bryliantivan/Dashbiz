@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Butt
 import { Ionicons } from '@expo/vector-icons';
 
 const EditCashierScreen = ({ navigation, route }) => {
-  // Mendapatkan data kasir dari parameter navigasi
-  const { cashier } = route.params || {};
+  // Mendapatkan data kasir dan fungsi onSave dari parameter navigasi
+  const { cashier, onSave } = route.params || {};
 
   const [name, setName] = useState(cashier?.name || '');
   const [email, setEmail] = useState(cashier?.email || '');
@@ -21,9 +21,20 @@ const EditCashierScreen = ({ navigation, route }) => {
 
   const handleSave = () => {
     // Logika untuk menyimpan perubahan kasir
-    console.log('Menyimpan perubahan untuk kasir:', { id: cashier?.id, name, email, status });
-    // TODO: Kirim data yang diperbarui kembali ke CashierManagement atau ke backend
-    navigation.goBack(); // Kembali ke halaman sebelumnya
+    const updatedCashier = {
+      ...cashier, // Gunakan spread operator untuk mempertahankan properti lain
+      name,
+      email,
+      status,
+    };
+    
+    // Panggil fungsi onSave yang dikirim dari CashierManagement.js
+    if (onSave) {
+      onSave(updatedCashier);
+    }
+
+    // Kembali ke halaman sebelumnya
+    navigation.goBack();
   };
 
   return (
@@ -85,6 +96,7 @@ const EditCashierScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  // ... (styling tetap sama)
   safeArea: {
     flex: 1,
     backgroundColor: '#FFFCF0',

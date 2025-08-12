@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,9 @@ import {
   FlatList,
   Alert,
   Modal,
-  Image
+  Image,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native'; // Tambahkan ini
 import { Ionicons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
@@ -31,7 +32,26 @@ const CashierManagement = ({ navigation }) => {
   const [newCashierName, setNewCashierName] = useState('');
   const [newCashierEmail, setNewCashierEmail] = useState('');
 
-  const filteredCashiers = cashiers.filter(cashier =>
+  // Fungsi untuk menerima data yang diubah dari EditCashierScreen
+  const handleUpdateCashier = useCallback((updatedCashier) => {
+    setCashiers((prevCashiers) =>
+      prevCashiers.map((cashier) =>
+        cashier.id === updatedCashier.id ? updatedCashier : cashier
+      )
+    );
+  }, []);
+
+  // UseFocusEffect untuk mendengarkan perubahan pada layar yang kembali
+  useFocusEffect(
+    useCallback(() => {
+      // Tidak perlu ada logika khusus di sini, karena navigasi sudah menangani pembaruan state.
+      // Kita bisa menggunakan `setOptions` untuk mendefinisikan callback
+      // pembaruan, tetapi mengirimkannya sebagai parameter navigasi sudah cukup
+      // untuk kasus ini.
+    }, [])
+  );
+
+  const filteredCashiers = cashiers.filter((cashier) =>
     cashier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     cashier.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     cashier.id.toLowerCase().includes(searchQuery.toLowerCase())
@@ -59,7 +79,7 @@ const CashierManagement = ({ navigation }) => {
       lastLogin: 'Never',
     };
 
-    setCashiers(prevCashiers => [...prevCashiers, newCashier]);
+    setCashiers((prevCashiers) => [...prevCashiers, newCashier]);
     setModalVisible(false);
     setNewCashierName('');
     setNewCashierEmail('');
@@ -67,10 +87,15 @@ const CashierManagement = ({ navigation }) => {
   };
 
   const handleEditCashier = (cashierId) => {
-    const cashierToEdit = cashiers.find(c => c.id === cashierId);
+    const cashierToEdit = cashiers.find((c) => c.id === cashierId);
     if (cashierToEdit) {
-      // Implementasi edit dalam modal atau layar lain jika diperlukan
-      Alert.alert('Edit Cashier', 'Edit functionality will be implemented here.');
+      // Arahkan ke EditCashierScreen dan kirim data kasir
+      navigation.navigate('EditCashier', { 
+        cashier: cashierToEdit,
+        onSave: (updatedCashier) => {
+          handleUpdateCashier(updatedCashier);
+        }
+      });
     } else {
       Alert.alert('Error', 'Cashier not found.');
     }
@@ -88,7 +113,7 @@ const CashierManagement = ({ navigation }) => {
         {
           text: 'Delete',
           onPress: () => {
-            setCashiers(prevCashiers => prevCashiers.filter(c => c.id !== cashierId));
+            setCashiers((prevCashiers) => prevCashiers.filter((c) => c.id !== cashierId));
             Alert.alert('Success', 'Cashier deleted successfully.');
           },
           style: 'destructive',
@@ -104,7 +129,9 @@ const CashierManagement = ({ navigation }) => {
         <Text style={styles.cashierId}>Cashier ID: {item.id}</Text>
         <Text style={styles.cashierName}>{item.name}</Text>
         <Text style={styles.cashierEmail}>{item.email}</Text>
-        <Text style={styles.cashierStatus}>Status: <Text style={{ fontWeight: 'bold', color: item.status === 'Active' ? '#355843' : '#FF6347' }}>{item.status}</Text></Text>
+        <Text style={styles.cashierStatus}>
+          Status: <Text style={{ fontWeight: 'bold', color: item.status === 'Active' ? '#355843' : '#FF6347' }}>{item.status}</Text>
+        </Text>
         <Text style={styles.cashierLastLogin}>Last Login: {item.lastLogin}</Text>
       </View>
       <View style={styles.cashierActions}>
@@ -141,7 +168,6 @@ const CashierManagement = ({ navigation }) => {
             style={[styles.searchIcon, { width: 20, height: 20 }]}
             resizeMode="contain"
           />
-
           <TextInput
             style={styles.searchInput}
             placeholder="Search Cashier..."
@@ -164,15 +190,13 @@ const CashierManagement = ({ navigation }) => {
         <FlatList
           data={filteredCashiers}
           renderItem={renderCashierItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           contentContainerStyle={styles.cashierListContent}
           showsVerticalScrollIndicator={false}
-          ListEmptyComponent={() => (
-            <Text style={styles.emptyListText}>No cashiers found.</Text>
-          )}
+          ListEmptyComponent={() => <Text style={styles.emptyListText}>No cashiers found.</Text>}
         />
       </View>
-      
+
       {/* Modal untuk menambahkan kasir baru */}
       <Modal
         animationType="slide"
@@ -220,6 +244,7 @@ const CashierManagement = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  // ... (styling tetap sama)
   safeArea: {
     flex: 1,
     backgroundColor: '#FFFCF0',

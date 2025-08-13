@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Modal,
-  Pressable,
-  Image
+  FlatList,
+  Image,
+  ScrollView // Import ScrollView
 } from 'react-native';
 import { Ionicons, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 const PaymentPage = ({ navigation, route }) => {
-  const { totalPrice = 0, orders, table, customer } = route.params;
+  // Destructure the items from route.params and use them to initialize the state
+  const { items = [], table, customer } = route.params;
+  const [orders, setOrders] = useState(items);
   const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [successModalVisible, setSuccessModalVisible] = useState(false);
 
-  const subtotal = Number(totalPrice) || 0;
+  // State for dynamic subtotal
+  const [subtotal, setSubtotal] = useState(0);
+
+  // Recalculate subtotal whenever the orders array changes
+  useEffect(() => {
+    const newSubtotal = orders.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    setSubtotal(newSubtotal);
+  }, [orders]);
+
   const tax = subtotal * 0.11;
   const total = subtotal + tax;
 
@@ -25,6 +36,16 @@ const PaymentPage = ({ navigation, route }) => {
       currency: 'IDR',
       minimumFractionDigits: 0,
     }).format(amount);
+
+  // Function to handle quantity changes and item removal
+  const handleQuantityChange = (id, change) => {
+    setOrders(prevOrders => {
+      const updatedOrders = prevOrders.map(item =>
+        item.id === id ? { ...item, quantity: Math.max(0, item.quantity + change) } : item
+      ).filter(item => item.quantity > 0); // Remove item if quantity is 0
+      return updatedOrders;
+    });
+  };
 
   const handlePay = () => {
     setSuccessModalVisible(true);
@@ -37,93 +58,121 @@ const PaymentPage = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {/* Header */}
+      {/* Header - This will stay fixed at the top */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={require('../../assets/back.png')}
             style={styles.BackIcon}
-        />
+          />
         </TouchableOpacity>
         <Text style={styles.title}>Order #1225</Text>
         <View style={{ width: 24 }} />
       </View>
 
-      {/* Info */}
-      <View style={styles.infoBox}>
-        <Text style={styles.label}>Table</Text>
-        <Text style={styles.value}>{table || 'Outdoor, 7'}</Text>
-      </View>
-      <View style={styles.infoBox}>
-        <Text style={styles.label}>Customer's Name</Text>
-        <View style={styles.rowSpace}>
-          <Text style={styles.value}>{customer || 'Budi'}</Text>
-          <TouchableOpacity
-            style={styles.editBtn}
-            onPress={() => navigation.goBack()}
-          >
-            <Text>Edit</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      {/* Scrollable content area - All other components are placed inside this ScrollView */}
+      <ScrollView showsVerticalScrollIndicator={false}>
 
-      {/* Payment Method */}
-      <Text style={styles.sectionTitle}>Payment</Text>
-      {['Cash', 'Debit Card/Credit Card', 'QRIS'].map((method) => (
-        <TouchableOpacity
-          key={method}
-          style={styles.paymentOption}
-          onPress={() => setPaymentMethod(method)}
-        >
-          <View style={styles.iconWrap}>
-            {method === 'Cash' ? (
-              <Image
-                source={require('../../assets/cash.png')}
-              />
-            ) : method === 'QRIS' ? (
-              <Image
-                source={require('../../assets/qris.png')}
-              />
-            ) : (
-              <Image
-                source={require('../../assets/debit.png')}
-              />
-            )}
+        {/* Info */}
+        <View style={styles.infoBox}>
+          <Text style={styles.label}>Table</Text>
+          <Text style={styles.value}>{table || 'Outdoor, 7'}</Text>
+        </View>
+        <View style={styles.infoBox}>
+          <Text style={styles.label}>Customer's Name</Text>
+          <View style={styles.rowSpace}>
+            <Text style={styles.value}>{customer || 'Budi'}</Text>
+            <TouchableOpacity
+              style={styles.editBtn}
+              onPress={() => navigation.goBack()}
+            >
+              <Text>Edit</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.paymentText}>{method}</Text>
-          <View style={{ flex: 1 }} />
-          <View
-            style={[
-              styles.radio,
-              paymentMethod === method && styles.radioSelected,
-            ]}
+        </View>
+
+        {/* Orders Section */}
+        <View style={styles.ordersContainer}>
+          <Text style={styles.sectionTitle}>Orders</Text>
+          <FlatList
+            data={orders}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <View style={styles.orderCard}>
+                <Image source={item.image} style={styles.orderImage} />
+                <View style={styles.orderDetails}>
+                  <Text style={styles.orderName}>{item.name}</Text>
+                  <Text style={styles.orderPrice}>Rp{item.price.toLocaleString()}</Text>
+                </View>
+                <View style={styles.orderQuantityControl}>
+                  <TouchableOpacity onPress={() => handleQuantityChange(item.id, -1)}>
+                    <Image source={require('../../assets/minbtn.png')} style={styles.AddMinIcon} />
+                  </TouchableOpacity>
+                  <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <TouchableOpacity onPress={() => handleQuantityChange(item.id, 1)}>
+                    <Image source={require('../../assets/plusbtn.png')} style={styles.AddMinIcon} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            // FlatList has its own scrolling, but wrapping it in a ScrollView is fine for this layout
+            style={{ maxHeight: 200 }} 
           />
+        </View>
+
+        {/* Payment Method */}
+        <Text style={styles.sectionTitle}>Payment</Text>
+        {['Cash', 'Debit Card/Credit Card', 'QRIS'].map((method) => (
+          <TouchableOpacity
+            key={method}
+            style={styles.paymentOption}
+            onPress={() => setPaymentMethod(method)}
+          >
+            <View style={styles.iconWrap}>
+              {method === 'Cash' ? (
+                <Image source={require('../../assets/cash.png')} />
+              ) : method === 'QRIS' ? (
+                <Image source={require('../../assets/qris.png')} />
+              ) : (
+                <Image source={require('../../assets/debit.png')} />
+              )}
+            </View>
+            <Text style={styles.paymentText}>{method}</Text>
+            <View style={{ flex: 1 }} />
+            <View
+              style={[
+                styles.radio,
+                paymentMethod === method && styles.radioSelected,
+              ]}
+            />
+          </TouchableOpacity>
+        ))}
+
+        {/* Payment Detail */}
+        <View style={styles.paymentDetail}>
+          <Text style={styles.sectionTitle}>Payment Detail</Text>
+          <View style={styles.detailRow}>
+            <Text>Subtotal</Text>
+            <Text>{formatCurrency(subtotal)}</Text>
+          </View>
+          <View style={styles.detailRow}>
+            <Text>Tax 11%</Text>
+            <Text>{formatCurrency(tax)}</Text>
+          </View>
+          <View style={styles.detailRow}>
+            <Text style={{ fontWeight: 'bold' }}>Total</Text>
+            <Text style={{ fontWeight: 'bold' }}>{formatCurrency(total)}</Text>
+          </View>
+        </View>
+
+        {/* Pay Button - Now this will scroll with the content */}
+        <TouchableOpacity style={styles.payBtn} onPress={handlePay}>
+          <Text style={styles.payText}>Pay →</Text>
         </TouchableOpacity>
-      ))}
 
-      {/* Payment Detail */}
-      <View style={styles.paymentDetail}>
-        <Text style={styles.sectionTitle}>Payment Detail</Text>
-        <View style={styles.detailRow}>
-          <Text>Subtotal</Text>
-          <Text>{formatCurrency(subtotal)}</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text>Tax 11%</Text>
-          <Text>{formatCurrency(tax)}</Text>
-        </View>
-        <View style={styles.detailRow}>
-          <Text style={{ fontWeight: 'bold' }}>Total</Text>
-          <Text style={{ fontWeight: 'bold' }}>{formatCurrency(total)}</Text>
-        </View>
-      </View>
+      </ScrollView>
 
-      {/* Pay Button */}
-      <TouchableOpacity style={styles.payBtn} onPress={handlePay}>
-        <Text style={styles.payText}>Pay →</Text>
-      </TouchableOpacity>
-
-      {/* Modal */}
+      {/* Modal - This should be outside of the ScrollView to overlay the entire screen */}
       <Modal visible={successModalVisible} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
@@ -167,11 +216,14 @@ const PaymentPage = ({ navigation, route }) => {
   );
 };
 
-
 export default PaymentPage;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#FFFCF0' },
+  container: { 
+    flex: 1, 
+    paddingHorizontal: 16, // Use horizontal padding here
+    backgroundColor: '#FFFCF0' 
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -186,7 +238,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     marginBottom: 10,
-
   },
   label: { fontSize: 12, color: '#888' },
   value: { fontWeight: 'bold' },
@@ -247,6 +298,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
+    marginBottom: 20, // Add bottom margin to the button
   },
   payText: {
     color: '#fff',
@@ -309,4 +361,48 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  ordersContainer: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+  },
+  orderCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  orderImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 6,
+    marginRight: 12,
+  },
+  orderDetails: {
+    flex: 1,
+  },
+  orderName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  orderPrice: {
+    fontSize: 14,
+    color: '#555',
+  },
+  orderQuantityControl: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  quantityText: {
+    marginHorizontal: 10,
+    fontWeight: 'bold',
+  },
+  AddMinIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
+  }
 });

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFCF0', // Warna latar belakang sesuai gambar
   },
   scrollViewContent: {
-    paddingTop: 20,
+    paddingTop:60,
     paddingHorizontal: width * 0.05, // Padding horizontal untuk konten
     alignItems: 'center', // Pusatkan konten secara horizontal
   },

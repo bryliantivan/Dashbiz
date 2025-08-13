@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const RequestedFrDetail = () => {
+const RegisterFranchise = () => {
   const navigation = useNavigation();
-  const route = useRoute();
-  const { item, description: initialDescription, onAccept, onReject } = route.params || {};
 
-  const [franchiseName, setFranchiseName] = useState(item?.title || '');
-  const [dateFounded, setDateFounded] = useState('June 9th 2025');
-  const today = new Date();
-  const monthsEng = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  const day = today.getDate();
-  const dayWithSuffix = `${day}th`;
-  const todayString = `${monthsEng[today.getMonth()]} ${dayWithSuffix} ${today.getFullYear()}`;
-  const [dateCommenced, setDateCommenced] = useState(todayString);
-  const [description, setDescription] = useState(initialDescription || '');
-  const [contact, setContact] = useState(item?.requestedBy || '');
+  const [logo, setLogo] = useState(null);
+  const [franchiseName, setFranchiseName] = useState('');
+  const [dateFounded, setDateFounded] = useState('');
+  const [dateCommenced, setDateCommenced] = useState('');
+  const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
+  const [contact, setContact] = useState('');
+
+  const pickLogo = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setLogo(result.assets[0].uri);
+    }
+  };
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -43,17 +43,25 @@ const RequestedFrDetail = () => {
             source={require('../../assets/back.png')}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>REQUESTED DETAILS</Text>
+        <Text style={styles.headerTitle}>REGISTER FRANCHISE</Text>
       </View>
 
       {/* Form Card */}
       <View style={styles.card}>
-        {/* Top Image from item, fallback to placeholder */}
-        {item?.image ? (
-          <Image source={item.image} style={styles.imageTopPlaceholder} />
-        ) : (
-          <View style={styles.imageTopPlaceholder} />
-        )}
+        {/* Logo */}
+        <TouchableOpacity style={styles.logoPlaceholder} onPress={pickLogo}>
+          {logo ? (
+            <Image source={{ uri: logo }} style={styles.logoImage} />
+          ) : (
+            <>
+              <Image
+                source={require('../../assets/plusbtn.png')}
+                style={styles.plusIcon}
+              />
+              <Text style={styles.addImageText}>Add Logo</Text>
+            </>
+          )}
+        </TouchableOpacity>
 
         <Text style={styles.label}>Franchise Name</Text>
         <TextInput style={styles.input} value={franchiseName} onChangeText={setFranchiseName} />
@@ -95,21 +103,15 @@ const RequestedFrDetail = () => {
         <View style={styles.buttonRow}>
           <TouchableOpacity
             style={styles.rejectButton}
-            onPress={() => {
-              if (onReject) onReject(item);
-              navigation.goBack();
-            }}
+            onPress={() => navigation.navigate('Login')}
           >
-            <Text style={styles.rejectText}>Reject</Text>
+            <Text style={styles.rejectText}>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.acceptButton}
-            onPress={() => {
-              if (onAccept) onAccept(item);
-              navigation.goBack();
-            }}
+            onPress={() => navigation.navigate('FranchisorMainTabs')}
           >
-            <Text style={styles.acceptText}>Accept</Text>
+            <Text style={styles.acceptText}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -143,7 +145,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     marginBottom: 50
   },
-  imageTopPlaceholder: {
+  logoPlaceholder: {
     width: 80,
     height: 80,
     borderRadius: 10,
@@ -152,6 +154,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5
+  },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
   },
   label: {
     marginTop: 10,
@@ -202,10 +212,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
     elevation: 2,
   },
   acceptButton: {
@@ -213,10 +219,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
     elevation: 2,
   },
   rejectText: {
@@ -233,4 +235,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RequestedFrDetail;
+export default RegisterFranchise;

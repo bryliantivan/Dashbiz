@@ -94,7 +94,10 @@ const AdminDashboard = () => {
 
             {/* Search Bar */}
             <View style={styles.searchContainer}>
-                <Ionicons name="search" size={20} color="#000" style={styles.searchIcon} />
+                <Image
+                        source={require('../../assets/searchproduct.png')}
+                        style={styles.searchIcon}
+                    />
                 <TextInput
                     style={styles.searchBar}
                     placeholder="Search.."
@@ -170,6 +173,8 @@ const styles = StyleSheet.create({
         left: 12,
         top: 10,
         zIndex: 1,
+        width:20,
+        height:20
     },
     searchBar: {
         width: '100%',
@@ -237,9 +242,6 @@ const styles = StyleSheet.create({
     imagePlaceholder: {
         width: 80,
         height: 80,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#000',
         backgroundColor: '#fff',
         marginRight: 12,
     },

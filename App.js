@@ -14,6 +14,7 @@ import VerifyCodeScreen from './screens/Auth/VerifyCodeScreen';
 import ResetPasswordScreen from './screens/Auth/ResetPasswordScreen';
 
 // Import screens Franchisor
+import RegisterFranchise from './screens/Franchisor/RegisterFranchise';
 import FranchisorProfile from './screens/Franchisor/FranchisorProfile';
 import EditProfileFranchisor from './screens/Franchisor/EditProfileFranchisor';
 import FranchisorDashboard from './screens/Franchisor/FranchisorDashboard';
@@ -192,6 +193,7 @@ export default function App() {
         <Stack.Screen name="OwnerMainTabs" component={OwnerTabNavigator} />
         <Stack.Screen name="FranchisorMainTabs" component={FranchisorTabNavigator} />
 
+        <Stack.Screen name="RegisterFranchise" component={RegisterFranchise} />
         {/* Cashier Routes */}
         <Stack.Screen name="CashierDashboard" component={CashierDashboard} />
         <Stack.Screen name="AssignedFranchise" component={AssignedFranchise} />

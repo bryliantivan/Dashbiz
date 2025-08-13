@@ -26,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
       console.warn('Login sebagai Cashier - Navigasi belum diimplementasikan.');
       navigation.navigate('CashierDashboard');
     } else if (selectedRole === 'Franchisor') {
-      navigation.navigate('FranchisorMainTabs');
+      navigation.navigate('RegisterFranchise');
     } else if (selectedRole === 'Admin') {
       console.warn('Login sebagai Admin - Navigasi belum diimplementasikan.');
       navigation.navigate('Admin');

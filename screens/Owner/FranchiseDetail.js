@@ -1,4 +1,3 @@
-// screens/Owner/FranchiseDetail.js
 import React from 'react';
 import {
   View,
@@ -49,15 +48,19 @@ const FranchiseDetail = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#000" />
+      {/* New Header Container for all three elements */}
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Image
+            source={require('../../assets/back.png')}
+            style={styles.backIcon}
+          />
         </TouchableOpacity>
+        <Text style={styles.headerTitle}>Overview</Text>
+        <Text style={styles.franchiseNameHeader}>{franchiseName}</Text>
+      </View>
 
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>Overview</Text>
-          <Text style={styles.franchiseNameHeader}>{franchiseName}</Text>
-        </View>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
 
         <View style={styles.topSection}>
           <View style={styles.chartContainer}>
@@ -213,36 +216,40 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFCF0',
   },
-  scrollViewContent: {
-    paddingTop: 20,
-    paddingHorizontal: width * 0.05,
-    paddingBottom: 80,
-  },
-  backButton: {
-    position: 'absolute',
-    top: 20,
-    left: 20,
-    zIndex: 1,
-    padding: 10,
-  },
+  // Refactored headerContainer to align all three elements
   headerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: '',
     alignItems: 'center',
-    width: '100%',
-    marginTop: '12%',
+    paddingTop: 50,
+    paddingHorizontal: width * 0.05,
     marginBottom: 20,
-    paddingHorizontal: 20,
+  },
+  backButton: {
+    padding: 10,
+    paddingLeft: 0,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#000',
+    // marginRight: 130
+    // Removed alignSelf property as it's no longer needed
   },
   franchiseNameHeader: {
     fontSize: 16,
     color: '#888',
     fontWeight: '600',
+    marginLeft: 130
+  },
+  scrollViewContent: {
+    paddingHorizontal: width * 0.05,
+    paddingBottom: 80,
   },
   topSection: {
     flexDirection: 'row',

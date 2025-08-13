@@ -173,6 +173,10 @@ const ProductsCatalog = () => {
 
             <Text style={styles.label}>Image</Text>
             <Pressable onPress={handleImagePick} style={styles.imagePickerBox}>
+              <Image
+                source={require('../../assets/plusbtn.png')}
+                style={styles.plusBtn}
+              />
               <Text style={{ fontSize: 16 }}>
                 {newProductImageUri ? `Selected` : 'Add Image'}
               </Text>
@@ -314,7 +318,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#aaa',
+    borderColor: 'black',
     borderRadius: 8,
     padding: 10,
     marginBottom: 10,
@@ -379,6 +383,10 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 12,
     alignSelf: 'flex-start',
+  },
+  plusBtn: {
+    width: 18,
+    height: 18
   },
 });
 

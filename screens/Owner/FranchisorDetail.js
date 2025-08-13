@@ -30,10 +30,9 @@ const FranchisorDetail = ({ navigation, route }) => {
     description: `Chatime is a brewed tea drinks provider that uses the best, high-quality, and halal-certified tea leaves. Available in Indonesia since 2011 under F&B ID (PT Foods Beverages Indonesia) currently Chatime has managed to more than 420 stores spread across over 60 cities, with dine-in, take away, and online delivery services. With the intention to provide convenient experience when ordering through mobile phone, Chatime developed My F&B ID mobile app which can be downloaded from Google Play Store or App Store.`,
     longDescription: `For prospective investors in Indonesia, it's important to understand Chatime's unique operational framework. PT Foods Beverages Indonesia holds the sole and exclusive master license for Chatime across the entire country. This means all Chatime outlets in Indonesia are directly owned and managed by F&B ID. This centralized model is crucial for maintaining our stringent quality controls and ensuring consistent brand standards. Consequently, direct individual franchising opportunities for Chatime are not available in Indonesia. We recommend exploring other local investment avenues in the dynamic Indonesian food and beverage sector or contacting PT Foods Beverages Indonesia directly for any official inquiries.`,
     carouselImages: [
-      require('../../assets/ChatimeLogo.png'), // Placeholder
-      require('../../assets/ChatimeLogo.png'), // Placeholder
-      require('../../assets/ChatimeLogo.png'), // Placeholder
-      require('../../assets/ChatimeLogo.png'), // Placeholder
+      require('../../assets/Chatime1.jpg'), // Adjust path if necessary (e.g., ../../../assets/)
+      require('../../assets/Chatime2.jpg'),
+      require('../../assets/Chatime3.jpg'),
     ],
   };
 

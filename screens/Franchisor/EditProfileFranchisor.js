@@ -162,6 +162,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     marginRight: 10,
+    shadowColor: '#000', // Efek bayangan
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   cancelText: {
     fontWeight: 'bold',
@@ -169,15 +174,20 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     flex: 1,
-    backgroundColor: '#D3F276',
+    backgroundColor: '#355843',
     padding: 15,
     borderRadius: 30,
     alignItems: 'center',
     marginLeft: 10,
+    shadowColor: '#000', // Efek bayangan
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   saveText: {
     fontWeight: 'bold',
-    color: '#000',
+    color: 'white',
   },
   PencilIcon: {
     width: 14,

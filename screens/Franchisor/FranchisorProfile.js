@@ -1,31 +1,33 @@
-  import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // For logout icon
 
 const FranchisorProfile = () => {
   const scrollViewRef = useRef(null);
+  const { width: screenWidth } = Dimensions.get('window');
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const images = [
-    require('../../assets/Chatime1.jpg'), // Adjust path if necessary (e.g., ../../../assets/)
+    require('../../assets/Chatime1.jpg'),
     require('../../assets/Chatime2.jpg'),
     require('../../assets/Chatime3.jpg'),
   ];
   
-  const { width: screenWidth } = Dimensions.get('window');
   const navigation = useNavigation();
 
   const handleNext = () => {
     if (currentIndex < images.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      scrollViewRef.current.scrollTo({ x: currentIndex * screenWidth, animated: true });
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      scrollViewRef.current.scrollTo({ x: nextIndex * (screenWidth * 0.7), animated: true });
     }
   };
 
   const handlePrev = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      scrollViewRef.current.scrollTo({ x: currentIndex * screenWidth, animated: true });
+      const prevIndex = currentIndex - 1;
+      setCurrentIndex(prevIndex);
+      scrollViewRef.current.scrollTo({ x: prevIndex * (screenWidth * 0.7), animated: true });
     }
   };
 
@@ -43,35 +45,44 @@ const FranchisorProfile = () => {
           <View style={styles.franchiseDetails}>
             <Text style={styles.franchiseInfo}>CHATIME</Text>
             <View style={styles.row}>
-                          <Image
-                            source={require('../../assets/starhalf.png')}
-                            style={styles.DateIcon}
-                          /> 
-                          <Text>4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
-                        </View>
-                        <View style={styles.row}>
-                          <Image
-                            source={require('../../assets/datecommenced.png')}
-                            style={styles.DateIcon}
-                          />
-                          <Text style={styles.infoText}> Date Franchising Commenced : 2023</Text>
-                        </View>
-                        <View style={styles.row}>
-                          <Image
-                            source={require('../../assets/outlet.png')}
-                            style={styles.DateIcon}
-                          />
-                          <Text style={styles.infoText}> Number of Outlets : 460</Text>
-                        </View>
+              <Image
+                source={require('../../assets/starhalf.png')}
+                style={styles.DateIcon}
+              /> 
+              <Text>4.6</Text><Text style={styles.dot}>|</Text><Text>1945</Text>
+            </View>
+            <View style={styles.row}>
+              <Image
+                source={require('../../assets/datecommenced.png')}
+                style={styles.DateIcon}
+              />
+              <Text style={styles.infoText}> Date Franchising Commenced : 2023</Text>
+            </View>
+            <View style={styles.row}>
+              <Image
+                source={require('../../assets/outlet.png')}
+                style={styles.DateIcon}
+              />
+              <Text style={styles.infoText}> Number of Outlets : 460</Text>
+            </View>
           </View>
         </View>
         <Text style={styles.description}>
           Chatime is a brewed tea drinks provider that uses the best, high-quality, and halal-certified tea leaves. Available in Indonesia since 2011 under F&B ID (PT Foods Beverages Indonesia), currently Chatime has managed more than 420 stores spread across over 60 cities, with dine-in, take away, and online delivery services. With the intention to provide convenient experience when ordering through mobile phone, Chatime developed My F&B ID mobile app which can be downloaded from Google Play Store or App Store.
         </Text>
-        {/* Horizontal Carousel with Navigation and Indicators */}
+        
+        {/* Horizontal Carousel with full-width images and local arrows */}
         <View style={styles.carouselContainer}>
-          <TouchableOpacity style={styles.arrow} onPress={handlePrev} disabled={currentIndex === 0}>
-            <Text style={styles.arrowText}>←</Text>
+          <TouchableOpacity 
+            style={styles.arrow} 
+            onPress={handlePrev} 
+            disabled={currentIndex === 0}
+            activeOpacity={0.5}
+          >
+            <Image
+              source={require('../../assets/left.png')}
+              style={[styles.arrowIcon, currentIndex === 0 && styles.disabledArrow]}
+            />
           </TouchableOpacity>
           <ScrollView
             ref={scrollViewRef}
@@ -79,7 +90,7 @@ const FranchisorProfile = () => {
             showsHorizontalScrollIndicator={false}
             pagingEnabled
             style={styles.storeImage}
-            onScroll={(event) => {
+            onMomentumScrollEnd={(event) => {
               const slideSize = event.nativeEvent.layoutMeasurement.width;
               const index = event.nativeEvent.contentOffset.x / slideSize;
               setCurrentIndex(Math.round(index));
@@ -92,10 +103,19 @@ const FranchisorProfile = () => {
               </View>
             ))}
           </ScrollView>
-          <TouchableOpacity style={styles.arrow} onPress={handleNext} disabled={currentIndex === images.length - 1}>
-            <Text style={styles.arrowText}>→</Text>
+          <TouchableOpacity 
+            style={styles.arrow} 
+            onPress={handleNext} 
+            disabled={currentIndex === images.length - 1}
+            activeOpacity={0.5}
+          >
+            <Image
+              source={require('../../assets/right.png')}
+              style={[styles.arrowIcon, currentIndex === images.length - 1 && styles.disabledArrow]}
+            />
           </TouchableOpacity>
         </View>
+        
         {/* Indicators */}
         <View style={styles.indicatorContainer}>
           {images.map((_, index) => (
@@ -129,20 +149,48 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fef8ee' },
   content: { padding: 20, paddingTop: 40 },
   title: { fontSize: 28, fontWeight: 'bold', textAlign: 'left', color: '#000' },
-  headerBox: { flexDirection: 'row', alignItems: 'center', marginVertical: 10,  padding: 10, borderRadius: 5 },
+  headerBox: { flexDirection: 'row', alignItems: 'center', marginVertical: 10, padding: 10, borderRadius: 5 },
   logo: { width: 50, height: 50, marginRight: 10 },
   franchiseDetails: { flex: 1 },
   franchiseInfo: { fontSize: 32, fontWeight: 'bold', color: '#2E7D32' },
   description: { fontSize: 14, marginVertical: 10, color: '#333', textAlign: 'justify' },
-  carouselContainer: { flexDirection: 'row', alignItems: 'center', marginVertical: 10 },
-  storeImage: { width: '70%', height: 200 }, // Adjusted to center within container
-  carouselItem: { width: Dimensions.get('window').width * 0.7, height: 200, justifyContent: 'center', alignItems: 'center' },
-  carouselImage: { width: '100%', height: '100%', resizeMode: 'contain' },
-  arrow: { paddingHorizontal: 10 },
-  arrowText: { fontSize: 24, color: '#2E7D32' },
+  
+  // Refactored Carousel Styles
+  carouselContainer: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between',
+    marginVertical: 10, 
+  },
+  storeImage: { 
+    width: '70%', 
+    height: 200,
+  },
+  carouselItem: { 
+    width: Dimensions.get('window').width * 0.7, 
+    height: 200, 
+  },
+  carouselImage: { 
+    width: '100%', 
+    height: '100%', 
+    resizeMode: 'contain', // Set to 'contain' to show the full image without cropping
+    // Removed borderRadius to make the image a normal rectangle
+  },
+  arrow: { 
+    paddingHorizontal: 10,
+  },
+  arrowIcon: {
+    width: 24,
+    height: 24,
+    tintColor: '#2E7D32',
+  },
+  disabledArrow: {
+    opacity: 0.3,
+  },
+  
   indicatorContainer: { flexDirection: 'row', justifyContent: 'center', marginVertical: 10 },
   indicator: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#ccc', marginHorizontal: 5 },
-  activeIndicator: { backgroundColor: '#2E7D32' }, // Green for active
+  activeIndicator: { backgroundColor: '#2E7D32' },
   investorText: { fontSize: 14, marginVertical: 10, color: '#333', textAlign: 'justify' },
   editButton: { backgroundColor: '#355843', padding: 10, borderRadius: 5, alignItems: 'center', marginTop: 20, height: 40, width: 200, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.1, shadowRadius: 4, elevation: 3, },
   middle: { width: '100%', alignItems: 'center' },
@@ -162,7 +210,7 @@ const styles = StyleSheet.create({
   dot: {
     marginHorizontal: 10,
   },
-DateIcon: {
+  DateIcon: {
     width: 14,
     height: 14,
     resizeMode: 'contain',

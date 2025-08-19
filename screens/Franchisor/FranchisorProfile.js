@@ -41,9 +41,9 @@ const FranchisorProfile = () => {
         {/* Header Section */}
         <Text style={styles.title}>My Franchise</Text>
         <View style={styles.headerBox}>
-          <Image source={require('../../assets/ChatimeLogo.png')} style={styles.logo} />
+          <Image source={require('../../assets/krustykrab.webp')} style={styles.logo} />
           <View style={styles.franchiseDetails}>
-            <Text style={styles.franchiseInfo}>CHATIME</Text>
+            <Text style={styles.franchiseInfo}>Krusty Krab</Text>
             <View style={styles.row}>
               <Image
                 source={require('../../assets/starhalf.png')}

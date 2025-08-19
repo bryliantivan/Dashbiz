@@ -20,6 +20,7 @@ const initialFranchises = [
   { id: '6', name: 'Mary', joined: '12 May 2013', category: 'Chatime F', location: 'Pat Street' },
   { id: '7', name: 'Defin', joined: '29 July 2020', category: 'Chatime G', location: 'Trick Street' },
   { id: '8', name: 'Amelia', joined: '10 March 2017', category: 'Chatime H', location: 'Ghabena Street' },
+  { id: '9', name: 'ChumB', joined: '10 March 2017', category: 'Chumb H', location: 'Ghabena Street' },
 ];
 
 const FranchiseeList = () => {

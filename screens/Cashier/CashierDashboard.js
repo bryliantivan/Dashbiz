@@ -16,12 +16,13 @@ const initialFranchises = [
   { id: '1', name: 'Red Dog', since: '25 May 2000', image: require('../../assets/RedDogLogo.png') },
   { id: '2', name: 'Pizza Hut', since: '15 May 2000', image: require('../../assets/PizzaHutLogo.png') },
   { id: '3', name: 'JCO', since: '25 June 2000', image: require('../../assets/JCOLogo.png') },
+  { id: '4', name: 'Krusty Krab', since: '25 June 2000', image: require('../../assets/krustykrab.webp') },
 ];
 
 export default function CashierDashboard() {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState('Cashier’s Name');
+  const [name, setName] = useState('Patrick Star');
   const [email, setEmail] = useState('cashier@gmail.com');
   const [phone, setPhone] = useState('08xx xxxx xxxx');
 
@@ -61,7 +62,7 @@ export default function CashierDashboard() {
 
       {/* Profile Card */}
       <View style={styles.profileCard}>
-        <Image source={require('../../assets/Chatime1.jpg')} style={styles.profileImage} />
+        <Image source={require('../../assets/Patrick.jpeg')} style={styles.profileImage} />
         <View style={styles.profileInfo}>
           <Text style={styles.profileName}>{name}</Text>
           <Text>{email}</Text>

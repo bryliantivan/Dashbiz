@@ -23,6 +23,7 @@ const initialCashiers = [
   { id: '3', name: 'Joko Susilo', email: 'joko.s@example.com', status: 'Active', lastLogin: '2024-07-16 09:00' },
   { id: '4', name: 'Dewi Lestari', email: 'dewi.l@example.com', status: 'Active', lastLogin: '2024-07-17 11:45' },
   { id: '5', name: 'Agus Salim', email: 'agus.s@example.com', status: 'Inactive', lastLogin: '2024-07-05 16:00' },
+  { id: '6', name: 'Patrick', email: 'patrick@example.com', status: 'Active', lastLogin: '2024-07-05 16:00' },
 ];
 
 const CashierManagement = ({ navigation }) => {

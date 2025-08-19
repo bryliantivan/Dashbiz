@@ -12,7 +12,7 @@ const FranchisorDashboard = () => {
     {
       id: 1,
       name: 'Basic Package',
-      image: require('../../assets/ChatimeLogo.png'),
+      image: require('../../assets/krustykrab.webp'),
       outlets: 10,
     }
   ]);
@@ -56,9 +56,9 @@ const FranchisorDashboard = () => {
 
         {/* Franchise Info */}
         <View style={styles.franchiseBox}>
-          <Image source={require('../../assets/ChatimeLogo.png')} style={styles.logo} />
+          <Image source={require('../../assets/krustykrab.webp')} style={styles.logo} />
           <View style={styles.franchiseInfo}>
-            <Text style={styles.franchiseLabel}>FRANCHISE</Text>
+            <Text style={styles.franchiseLabel}>Krusty Krab</Text>
             <View style={styles.row}>
               <Image
                 source={require('../../assets/starhalf.png')}

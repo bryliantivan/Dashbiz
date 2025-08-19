@@ -16,6 +16,8 @@ const AdminDashboard = () => {
         { id: 4, title: 'Krispy Kreme', requestedBy: 'aicirtap', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},
         { id: 5, title: 'Pizza Hut', requestedBy: 'snoozie', image: require('../../assets/PizzaHutLogo.png'), description: 'Pizza Hut adalah franchise pizza yang lebih enak dari Domino' },
         { id: 6, title: 'Red Dog', requestedBy: 'waaw', image: require('../../assets/RedDogNoHangulLogo.png'), description: 'Red Dog adalah franchise yang jualan sosis mozza seharga ci mehong' },
+        { id: 13, title: 'Krusty Krab', requestedBy: 'mrKrabs', image: require('../../assets/krustykrab.webp'), description: 'Krusty Krab adalah franchise jualan petti terenak' },
+        { id: 14, title: 'Chumb Bucket', requestedBy: 'mrPlankton', image: require('../../assets/chumb.jpg'), description: 'Chumb Bucket adalah franchise jualan chum chum' },
     ]);
     const [accepted, setAccepted] = useState([
         { id: 7, title: 'Krispy Kreme', requestedBy: 'incenzee', image: require('../../assets/KrispyKremeLogo.png'), description: 'Krispy Kreme adalah franchise yang glaze nya enak bet'},

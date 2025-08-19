@@ -117,11 +117,11 @@ export default function AssignedFranchise() {
       {/* Profile Section */}
       <View style={styles.profile}>
         <Image
-            source={require('../../assets/Chatime3.jpg')} // Change to your image path
+            source={require('../../assets/Patrick.jpeg')} // Change to your image path
             style={styles.avatar}
             />
         <View style={{ marginLeft: 10 }}>
-          <Text style={styles.name}>Nicholas Defin</Text>
+          <Text style={styles.name}>Patrick Star</Text>
           <Text style={styles.role}>Cashier</Text>
         </View>
       </View>

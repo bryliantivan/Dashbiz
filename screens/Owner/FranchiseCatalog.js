@@ -24,6 +24,7 @@ const allFranchises = [
   { id: '6', name: 'Pizza Hut', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder
   { id: '7', name: 'Red Dog', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan
   { id: '8', name: 'Subway', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan
+  { id: '9', name: 'Krusty Krab', logo: require('../../assets/krustykrab.webp') }, // Contoh tambahan
 ];
 
 const FranchiseCatalog = ({ navigation }) => {

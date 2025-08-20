@@ -23,6 +23,7 @@ const franchises = [
   { id: '6', name: 'Pizza Hut', monthlySales: 'Rp4.567.890', logo: require('../../assets/PizzaHutLogo.png') }, // Placeholder, as per your input
   { id: '7', name: 'Red Dog', monthlySales: 'Rp3.123.456', logo: require('../../assets/RedDogLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
   { id: '8', name: 'Subway', monthlySales: 'Rp6.543.210', logo: require('../../assets/SubwayLogo.png') }, // Contoh tambahan, monthlySales ditambahkan
+  { id: '9', name: 'Krusty Krab', monthlySales: 'Rp6.543.210', logo: require('../../assets/krustykrab.webp') }, // Contoh tambahan, monthlySales ditambahkan
 ];
 
 const OwnerDashboard = ({ navigation }) => {
